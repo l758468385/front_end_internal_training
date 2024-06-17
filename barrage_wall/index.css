@@ -22,14 +22,6 @@ body {
     background-color: #000;
 }
 
-#show {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .barrage {
     position: absolute;
     white-space: nowrap;
@@ -60,7 +52,7 @@ body {
 button {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: mediumseagreen;
+    background-color: #00a591;
     color: #fff;
     border: none;
     border-radius: 4px;
