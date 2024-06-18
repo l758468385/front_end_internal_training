@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const slidesData = [
         { src: "slide1.jpg", alt: "Slide 1" },
         { src: "slide2.jpg", alt: "Slide 2" },
-        { src: "slide3.jpg", alt: "Slide 2" },
+        { src: "slide3.jpg", alt: "Slide 3" },
         // 更多图片数据
     ];
 
@@ -69,6 +69,11 @@ document.addEventListener("DOMContentLoaded", function() {
         indicators[currentIndex].classList.remove("active");
         indicators[index].classList.add("active");
 
+
+        slides.forEach((carouselItem,carouselIndex) => {
+            carouselIndex === index ? carouselItem.classList.add('active') : carouselItem.classList.remove('active');
+        })
+
         // 移动幻灯片容器以显示指定幻灯片
         const slideWidth = slides[0].clientWidth;
         carouselInner.style.transform = `translateX(-${index * slideWidth}px)`;
@@ -113,6 +118,26 @@ document.addEventListener("DOMContentLoaded", function() {
     function pauseCarousel() {
         clearInterval(intervalId);
         intervalId = null; // 清除定时器 ID
+
+        // 暂停当前指示器动画
+        const activeIndicator = carousel.querySelector(".indicator.active .progress-circle");
+        if (activeIndicator) {
+            const computedStyle = window.getComputedStyle(activeIndicator);
+            const dashOffset = computedStyle.strokeDashoffset;
+            activeIndicator.style.transition = "none";
+            activeIndicator.style.strokeDashoffset = dashOffset;
+        }
+    }
+
+    // 重新启动指示器动画
+    function resumeProgressAnimation() {
+        const activeIndicator = carousel.querySelector(".indicator.active .progress-circle");
+        if (activeIndicator) {
+            const radius = parseFloat(activeIndicator.getAttribute("r"));
+            const circumference = 2 * Math.PI * radius;
+            activeIndicator.style.transition = `stroke-dashoffset ${slideDuration}ms linear`;
+            activeIndicator.style.strokeDashoffset = "0";
+        }
     }
 
     // 鼠标悬停暂停自动播放
@@ -121,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     carousel.addEventListener("mouseleave", () => {
+        resumeProgressAnimation();
         startCarousel();
     });
 
