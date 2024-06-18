@@ -90,15 +90,16 @@ header nav ul li a {
 
 .card {
     flex: 1;
-    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .04);
     height: 180px;
     position: relative;
 }
 
-.card :hover {
+.card:hover {
     cursor: pointer;
     transform: translateY(-3px);
     transition: all .15s linear;
+
+    box-shadow: 0 4PX 15PX 0 rgba(0, 0, 0, .04)
 }
 
 .card img {
