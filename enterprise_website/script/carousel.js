@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const indicatorsContainer = carousel.querySelector(".indicators");
 
     const slidesData = [
-        { src: "slide1.jpg", alt: "Slide 1" },
-        { src: "slide2.jpg", alt: "Slide 2" },
-        { src: "slide3.jpg", alt: "Slide 3" },
+        { src: "static/slide1.jpg", alt: "Slide 1" },
+        { src: "static/slide2.jpg", alt: "Slide 2" },
+        { src: "static/slide3.jpg", alt: "Slide 3" },
         // 更多图片数据
     ];
 

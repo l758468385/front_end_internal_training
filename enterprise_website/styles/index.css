@@ -3,10 +3,6 @@
     overflow: hidden;
 }
 
-body {
-    background-color: #333;
-}
-
 .carousel-inner {
     position: relative;
     display: flex;
@@ -108,8 +104,23 @@ body {
     fill: none;
 }
 
+main img {
+    cursor: pointer;
+}
+.service-wrap img:hover,
+.news-wrap img:hover {
+    box-shadow: 0 16px 32px 0 rgba(10, 16, 34, .2), 0 0 0 transparent;
+    transform: translateY(-5px) translateZ(0);
+    transition: transform .2s ease, box-shadow .2s ease, -webkit-transform .2s ease, -webkit-box-shadow .2s ease;
+}
 
 
+.team-wrap img:hover {
+    transition: transform 0.5s ease;
+    transform: scale(1.02); /* 放大比例 */
+    z-index: 2;
+    position: relative;
+}
 
 /*服务范围样式*/
 /* CSS for animations */
@@ -142,6 +153,9 @@ body {
 .animate-fadeIn {
     animation: fadeIn 0.5s ease-out forwards;
 }
+.hide-ele {
+    opacity: 0;
+}
 
 
 
@@ -149,7 +163,7 @@ body {
 .culture-wrap {
     position: relative;
     overflow: hidden;
-    background-image: url('enterprise_culture.jpg');
+    background-image: url('../static/enterprise_culture.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -172,3 +186,30 @@ body {
     z-index: 1; /* 确保内容在遮罩上层显示 */
     color: white;
 }
+
+.split-line {
+    background-color: #FF350D;
+    width: 128px;
+    height: 6px;
+    margin: 32px 0;
+}
+
+
+
+.team-content {
+    color: #fff;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+    z-index: 3;
+}
+
+
+/*新闻动态*/
+.news-wrap {
+    background-color: #252429;
+}
+

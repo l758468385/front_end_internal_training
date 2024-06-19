@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新闻列表</title>
+    <script src="tailwindcss.js"></script>
+    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    <link rel="stylesheet" href="styles/header.css"/>
+</head>
+<body>
+<header class="relative w-full ">
+    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white absolute top-0 z-10">
+        <div class="font-semibold text-xl ml-12 ">企业官网</div>
+        <div class="menuBtn   block md:hidden">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- 移动端 -->
+        <nav class="block md:hidden " id="navBox">
+            <div class="links-wrap">
+                <a  class="text-lg" href="index.html" >首页</a>
+                <a  class="text-lg" href="news.html" >新闻动态页</a>
+                <a  class="text-lg" href="about.html" >关于我们</a>
+            </div>
+        </nav>
+        <nav class="mr-[280px] hidden md:block">
+            <a  href="index.html" class="nav-link ">首页</a>
+            <a  href="news.html" class="nav-link mx-14 active">新闻动态页</a>
+            <a  href="about.html" class="nav-link">关于我们</a>
+        </nav>
+    </div>
+
+
+
+</header>
+</body>
+</html>
