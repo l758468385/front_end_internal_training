@@ -1,0 +1,169 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: #f6f6f6;
+}
+
+.page-content {
+    width: 1160px;
+    margin: 0 auto;
+}
+
+.title-line {
+    position: relative;
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #3d4e66;
+    line-height: 30px;
+}
+
+.common-box {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.title-line:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 4px;
+    height: 20px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #3ebd9b, #72e1c3);
+}
+
+.normal-table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+}
+
+.normal-table tr td {
+    border: 1px solid #d5d5d5;
+    padding: 5px 8px;
+    color: #888;
+}
+
+.normal-table tr td:nth-child(odd) {
+    background: #f3f3f3;
+    color: #666;
+    width: 100px;
+}
+
+.title-and-btn-box {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0 0 6px;
+    display: flex;
+    align-items: center;
+}
+
+.title-and-btn-box .box-title {
+    width: 50%;
+    color: #3d4e66;
+}
+
+.title-and-btn-box .btn-box {
+    width: 50%;
+    text-align: right;
+}
+
+.info-title {
+    font-size: 16px;
+    color: #506d96;
+    border-bottom: 1px dashed #e9f2f5;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background: #3ebd9b;
+    color: #fff;
+    border-radius: 3px;
+    padding: 6px 12px;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #2e9075;
+}
+
+.disabled {
+
+}
+
+.float-r {
+    float: right;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.form-label {
+    width: 110px;
+    font-size: 14px;
+    text-align: right;
+    line-height: 16px;
+    padding-right: 5px;
+}
+
+.page-plugin {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-direction: row;
+}
+
+.page-plugin > div {
+    margin-left: 20px;
+}
+
+.page-plugin .page-index {
+    display: flex;
+}
+
+.page-plugin .page-index > div {
+    padding: 5px 12px;
+    border: 1px solid #999;
+    color: #999;
+    cursor: pointer;
+    user-select: none;
+}
+
+.page-plugin .page-index > div:hover {
+    border: 1px solid #3ebd9b;
+    color: #8eecd3;
+}
+
+.page-plugin .page-index .active {
+    border-color: #3ebd9b;
+    color: #fff;
+    background: #3ebd9b;
+}
+
+.page-plugin .page-index > div + div {
+    margin-left: 10px;
+}

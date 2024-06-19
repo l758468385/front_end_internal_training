@@ -9,10 +9,13 @@
     <script src="tailwindcss.js"></script>
     <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     <link rel="stylesheet" href="styles/header.css"/>
+    <link rel="stylesheet" href="styles/news.css"/>
+    <link rel="stylesheet" href="styles/pagination.css"/>
+
 </head>
 <body>
 <header class="relative w-full ">
-    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white absolute top-0 z-10">
+    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white ">
         <div class="font-semibold text-xl ml-12 ">企业官网</div>
         <div class="menuBtn   block md:hidden">
             <span></span>
@@ -33,9 +36,93 @@
             <a  href="about.html" class="nav-link">关于我们</a>
         </nav>
     </div>
-
-
-
 </header>
+
+<main class="bg-white container m-auto">
+    <div class="flex  flex-col items-center ">
+        <h2 class="text-5xl mt-24 text-[#000000]">新闻动态</h2>
+        <div class="split-line "></div>
+        <div class="w-full px-4 grid grid-cols-2 md:grid-cols-4 gap-6 mb-5">
+            <div class="news-item">
+                <img src="static/news1.jpg"  class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl text-[#000000]	leading-9	block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm text-[#353535] hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news2.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news3.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news4.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele" >2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm	leading-7 hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+
+
+            <div class="container ">
+                <img src="static/news1.jpg"  class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9	block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news2.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news3.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+            <div class="news-item">
+                <img src="static/news4.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
+                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele" >2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
+                <h2 class="text-sm	leading-7 hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
+            </div>
+        </div>
+
+
+        <div class="page-plugin" id="pagePlugin"></div>
+    </div>
+</main>
+
+
+<footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
+    <div class="  mb-5	flex flex-col  md:flex-row">
+        <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
+        <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
+        <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
+    </div>
+    <div class="flex items-center justify-center p-2">
+        <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
+        <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有  陕ICP备xxxxxxx号</span>
+    </div>
+</footer>
+
+
+<script src="script/about.js"></script>
+<script src="script/utils.js"></script>
+<script src="script/pagination.js"></script>
+<script>
+    // 回调函数，页码改变时触发回调事件，用户可以在该回调内处理自己的业务逻辑
+    var pageChange = data => {
+        const { pageNum, pageSize } = data
+        console.log(`新的页码${pageNum}新的分页大小${pageSize}`)
+        // 处理你的分页逻辑（更新数据）
+    }
+
+    var homePagePlugin = new PagePlugin('pagePlugin',pageChange)
+
+    setTimeout(()=>{
+        // 第5页，每页10条数据，共113条数据
+        homePagePlugin.setPage(5, 10, 113)
+    }, 1000 * 3)
+</script>
 </body>
 </html>

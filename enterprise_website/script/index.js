@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     const elements = document.querySelectorAll('.hide-ele');
-    console.log('hide-ele', elements.length);
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -28,19 +27,5 @@ document.addEventListener("DOMContentLoaded", function() {
         const parallaxElement = document.querySelector('.culture-wrap');
         parallaxElement.style.backgroundPositionY = -scrollTop * 0.5 + 'px';
     });
-
-    const menuBtn = document.querySelector('.menuBtn');
-    const navBox = document.querySelector('#navBox');
-    console.log('navBox',navBox)
-    menuBtn.addEventListener('click', function() {
-        console.log('navBox.style.display',navBox.style.display)
-      if(navBox.style.display === 'none' || !navBox.style.display ) {
-          navBox.style.display = 'block';
-          menuBtn.classList.add('active')
-      }else {
-          navBox.style.display = 'none';
-          menuBtn.classList.remove('active');
-      }
-    })
 
 });
