@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于我们</title>
+    <script src="tailwindcss.js"></script>
+    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    <link rel="stylesheet" href="styles/header.css"/>
+    <link rel="stylesheet" href="styles/news_detail.css"/>
+</head>
+<body>
+<header class="relative w-full ">
+    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white ">
+        <div class="font-semibold text-xl ml-12 ">企业官网</div>
+        <div class="menuBtn   block md:hidden">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- 移动端 -->
+        <nav class="block md:hidden " id="navBox">
+            <div class="links-wrap">
+                <a  class="text-lg" href="index.html" >首页</a>
+                <a  class="text-lg" href="news.html" >新闻动态页</a>
+                <a  class="text-lg" href="about.html" >关于我们</a>
+            </div>
+        </nav>
+        <nav class="mr-[280px] hidden md:block">
+            <a  href="index.html" class="nav-link ">首页</a>
+            <a  href="news.html" class="nav-link mx-14">新闻动态页</a>
+            <a  href="about.html" class="nav-link active">关于我们</a>
+        </nav>
+    </div>
+
+
+
+</header>
+
+<main class="bg-white container m-auto mb-10">
+    <div class="flex flex-col items-center">
+        <h2 class="text-5xl mt-24 text-[#000000]">新闻详情页</h2>
+        <div class="split-line"></div>
+        <div class="container mb-10" id="news-detail-container">
+        </div>
+    </div>
+</main>
+
+
+<footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
+    <div class="  mb-5	flex flex-col  md:flex-row">
+        <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
+        <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
+        <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
+    </div>
+    <div class="flex items-center justify-center p-2">
+        <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
+        <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有  陕ICP备xxxxxxx号</span>
+    </div>
+</footer>
+
+<script src="script/about.js"></script>
+<script src="script/utils.js"></script>
+<script>
+    // Function to extract parameter from URL query string
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Function to fetch news details using the ID
+    function fetchNewsDetails(newsId) {
+        fetch(`http://127.0.0.1:3000/news/${newsId}`, {
+            method: 'get',
+            mode: 'cors',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Process fetched news details data
+                console.log('News details:', data);
+                // Render or display details on your detail page
+                renderNewsDetails(data.data);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    const newsContainer = document.getElementById('news-detail-container');
+    function renderNewsDetails(newsDetails) {
+        console.log('newsDetails',newsDetails)
+        const newsElement = document.createElement('div');
+        newsElement.classList.add('news-item');
+
+        newsElement.innerHTML = `
+
+                <div class="content">${newsDetails.content}</div>
+            `;
+
+        newsContainer.appendChild(newsElement);
+    }
+
+    // On page load, fetch news details using the ID from URL
+    document.addEventListener('DOMContentLoaded', function() {
+        var newsId = getParameterByName('id');
+        if (newsId) {
+            fetchNewsDetails(newsId);
+        } else {
+            console.error('News ID not found in URL');
+        }
+    });
+</script>
+
+</body>
+</html>

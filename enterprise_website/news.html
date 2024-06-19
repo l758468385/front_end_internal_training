@@ -7,122 +7,154 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>新闻列表</title>
     <script src="tailwindcss.js"></script>
-    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     <link rel="stylesheet" href="styles/header.css"/>
     <link rel="stylesheet" href="styles/news.css"/>
     <link rel="stylesheet" href="styles/pagination.css"/>
-
 </head>
 <body>
-<header class="relative w-full ">
-    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white ">
-        <div class="font-semibold text-xl ml-12 ">企业官网</div>
-        <div class="menuBtn   block md:hidden">
+<header class="relative w-full">
+    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white">
+        <div class="font-semibold text-xl ml-12">企业官网</div>
+        <div class="menuBtn block md:hidden">
             <span></span>
             <span></span>
             <span></span>
         </div>
         <!-- 移动端 -->
-        <nav class="block md:hidden " id="navBox">
+        <nav class="block md:hidden" id="navBox">
             <div class="links-wrap">
-                <a  class="text-lg" href="index.html" >首页</a>
-                <a  class="text-lg" href="news.html" >新闻动态页</a>
-                <a  class="text-lg" href="about.html" >关于我们</a>
+                <a class="text-lg" href="index.html">首页</a>
+                <a class="text-lg" href="news.html">新闻动态页</a>
+                <a class="text-lg" href="about.html">关于我们</a>
             </div>
         </nav>
         <nav class="mr-[280px] hidden md:block">
-            <a  href="index.html" class="nav-link ">首页</a>
-            <a  href="news.html" class="nav-link mx-14 active">新闻动态页</a>
-            <a  href="about.html" class="nav-link">关于我们</a>
+            <a href="index.html" class="nav-link">首页</a>
+            <a href="news.html" class="nav-link mx-14 active">新闻动态页</a>
+            <a href="about.html" class="nav-link">关于我们</a>
         </nav>
     </div>
 </header>
 
-<main class="bg-white container m-auto">
-    <div class="flex  flex-col items-center ">
+<main class="bg-white container m-auto mb-10">
+    <div class="flex flex-col items-center">
         <h2 class="text-5xl mt-24 text-[#000000]">新闻动态</h2>
-        <div class="split-line "></div>
-        <div class="w-full px-4 grid grid-cols-2 md:grid-cols-4 gap-6 mb-5">
-            <div class="news-item">
-                <img src="static/news1.jpg"  class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl text-[#000000]	leading-9	block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm text-[#353535] hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news2.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news3.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news4.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele" >2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm	leading-7 hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-
-
-            <div class="container ">
-                <img src="static/news1.jpg"  class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9	block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news2.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news3.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele">2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
-            <div class="news-item">
-                <img src="static/news4.jpg" class="w-full h-[300px] md:h-[506px]  hide-ele" alt="">
-                <h2 class="text-xl	leading-9 block mt-9 mb-7 hide-ele" >2022百度AI大会前夕，解读百度大脑的半年“豹变”</h2>
-                <h2 class="text-sm	leading-7 hide-ele">Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。</h2>
-            </div>
+        <div class="split-line"></div>
+        <div class="w-full px-4 grid grid-cols-2 md:grid-cols-4 gap-6 mb-10" id="newsContainer">
         </div>
-
-
-        <div class="page-plugin" id="pagePlugin"></div>
+        <div class="myPage" id="myPage"></div>
     </div>
 </main>
 
-
 <footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
-    <div class="  mb-5	flex flex-col  md:flex-row">
+    <div class="mb-5 flex flex-col md:flex-row">
         <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
         <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
         <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
     </div>
     <div class="flex items-center justify-center p-2">
         <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
-        <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有  陕ICP备xxxxxxx号</span>
+        <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有 陕ICP备xxxxxxx号</span>
     </div>
 </footer>
-
 
 <script src="script/about.js"></script>
 <script src="script/utils.js"></script>
 <script src="script/pagination.js"></script>
 <script>
-    // 回调函数，页码改变时触发回调事件，用户可以在该回调内处理自己的业务逻辑
-    var pageChange = data => {
-        const { pageNum, pageSize } = data
-        console.log(`新的页码${pageNum}新的分页大小${pageSize}`)
-        // 处理你的分页逻辑（更新数据）
+    let pageNum = 1;
+    let pageSize = 8;
+    const sessionPageNum = sessionStorage.getItem('pageNum');
+    console.log('sessionPageNum', sessionPageNum);
+    if (sessionPageNum) pageNum = +sessionPageNum;
+
+    function setupPagination(totalPages) {
+        new myPage('#myPage', {
+            total: totalPages,
+            pageSize: pageSize,
+            pageNum: pageNum,
+            count: 7,
+            inputJumpPage: true,
+            selectPageSize: true,
+            changePage: function(Num) {
+                pageNum = Num;
+                fetchNews(Num, pageSize);
+                sessionStorage.setItem('pageNum', Num);
+            },
+            changePageSize: function(size) {
+                pageSize = size;
+                fetchNews(1, pageSize);
+            }
+        });
     }
 
-    var homePagePlugin = new PagePlugin('pagePlugin',pageChange)
+    function fetchNews(pageNum, pageSize) {
+        fetch(`http://127.0.0.1:3000/news?page=${pageNum}&pageSize=${pageSize}`, {
+            method: 'get',
+            mode: 'cors',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.code === 200) {
+                    renderNews(data.data);
+                    // Update pagination component with new total pages
+                    setupPagination(data.total);
+                } else {
+                    console.error('Failed to fetch news:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
 
-    setTimeout(()=>{
-        // 第5页，每页10条数据，共113条数据
-        homePagePlugin.setPage(5, 10, 113)
-    }, 1000 * 3)
+    function renderNews(newsList) {
+        const newsContainer = document.getElementById('newsContainer');
+        newsContainer.innerHTML = ''; // 清空当前内容
+
+        newsList.forEach(news => {
+            console.log('news',news)
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-item';
+
+            const newsLink = document.createElement('a');
+            newsLink.href = `news-detail.html?id=${news.id}`;
+
+            const newsImage = document.createElement('img');
+            newsImage.src = news.cover;
+            newsImage.className = 'w-full h-[300px] md:h-[506px] hide-ele';
+            newsImage.alt = '';
+
+            const newsTitle = document.createElement('h2');
+            newsTitle.className = 'text-xl text-[#000000] leading-9 block mt-9 mb-7 hide-ele';
+            newsTitle.textContent = news.title;
+
+            const newsContent = document.createElement('h2');
+            newsContent.className = 'text-sm text-[#353535] hide-ele';
+            newsContent.textContent = news.summary;
+
+            newsLink.appendChild(newsImage);
+            newsLink.appendChild(newsTitle);
+            newsLink.appendChild(newsContent);
+
+            newsItem.appendChild(newsLink);
+
+            newsContainer.appendChild(newsItem);
+
+            newsLink.addEventListener('click', function(event) {
+
+            });
+        });
+    }
+
+    // 初次加载第一页新闻数据
+    fetchNews(pageNum, pageSize);
 </script>
+
 </body>
 </html>

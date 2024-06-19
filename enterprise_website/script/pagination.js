@@ -1,170 +1,317 @@
-class PagePlugin {
-    pageNum = 1
-    pageSize = 10
-    total = 0
-    element
-    totalPageNum // 总页数
-    totalSize // 总条数
-    pageIndexBox
-    pageItem = []
+;(function(global) {
 
-    callback // 回调函数，用于翻页的时候回调
+    function myPage(el, options) {
+        this.el = typeof el === "string" ? document.querySelector(el) : el;
+        var default_options = {
+            total: 1876,   // 数据总条数
+            pageSize: 10,   // 每页默认显示数量
+            pageNum: 1,   // 初始化页码
+            count: 7,   // 显示按钮个数
+            inputJumpPage: true,  // 是否开启输入框跳转页面
+            selectPageSize: true,  // 是否开启选择每页显示数据量
+            changePage: function(pageNum) {
 
-    constructor(element, callback) {
-        this.callback = callback
-        this.element = document.getElementById(element)
-        this.element.innerHTML = `
-            <div>共<span id='totalPageNum'>-</span>页/<span id='totalSize'>-</span>条数据</div>
-            <div class='page-index' id='pageIndexBox'></div>
-            <div>
-                每页<select id='pageSizeSelect' class='form-control-sm'>
-                    <option value='5'>5</option>
-                    <option value='10' selected>10</option>
-                    <option value='20'>20</option>
-                    <option value='50'>50</option>
-                    <option value='100'>100</option>
-                </select>条数据
-            </div>
-            <div>前往<input id='pageJumpInput' type='number' style='width: 80px;' class='form-control-sm' type='text'>页</div>`;
+            },
+            changePageSize: function(pageSize) {
 
-        this.totalPageNum = document.getElementById('totalPageNum')
-        this.totalSize = document.getElementById('totalSize')
-        this.pageIndexBox = document.getElementById('pageIndexBox')
-
-        document.getElementById('pageJumpInput').onkeydown = event => {
-            if (event.code === 'Enter') {
-                this.callback({
-                    pageNum: document.getElementById('pageJumpInput').value,
-                    pageSize: this.pageSize
-                })
             }
         }
-
-        document.getElementById('pageSizeSelect').addEventListener('change', () => {
-            this.pageSize = parseInt(document.getElementById('pageSizeSelect').value)
-            this.setPage(1, this.pageSize, this.total)
-        })
-
-        this.setPage()
-    }
-
-    // 初始化或重新渲染翻页组件的UI
-    initUI() {
-        this.totalPageNum.innerText = Math.ceil(this.total / this.pageSize)
-        this.totalSize.innerText = this.total
-
-        // 添加上一页按钮
-        const lastPage = document.createElement('div')
-        lastPage.innerText = '<'
-        lastPage.addEventListener('click', () => {
-            if (this.pageNum > 1) {
-                this.setPage(this.pageNum - 1)
+        if (options) {
+            for (let prop in options) {
+                default_options[prop] = options[prop];
             }
-        })
-        this.pageIndexBox.appendChild(lastPage)
+        }
+        this.options = default_options;
+        if (this.options.count < 5) {
+            throw new Error('显示按钮个数必须大于等于5')
+        }
+        this.currentPage = default_options.pageNum;
+        this.totals = Math.ceil(parseInt(this.options.total) / parseInt(this.options.pageSize));   // 上取整，根据总数据量和每页显示数据量计算出总页数
+        this.init();    // 初始化分页器
+    }
 
-        // 添加下一页按钮
-        const nextPage = document.createElement('div')
-        nextPage.innerText = '>'
-        nextPage.addEventListener('click', () => {
-            if (this.pageNum < Math.ceil(this.total / this.pageSize)) {
-                this.setPage(this.pageNum + 1)
+    myPage.prototype = {
+        init: function() {
+            this.destroy();
+            this.renderPage(this.currentPage);
+        },
+        prevPage: function() {
+            // 点击上翻一页
+            this.currentPage --;
+            this.renderPage(this.currentPage);
+            this.options.changePage(this.currentPage);
+        },
+        nextPage: function() {
+            // 点击下翻一页触发
+            this.currentPage ++;
+            this.renderPage(this.currentPage);
+            this.options.changePage(this.currentPage);
+        },
+        prevJumpPage: function() {
+            // 点击上翻几页
+            var JumpPage = this.options.count - 2;
+            this.currentPage -= JumpPage;
+            this.renderPage(this.currentPage);
+            this.options.changePage(this.currentPage);
+        },
+        nextJumpPage: function() {
+            // 点击下翻几页
+            var JumpPage = this.options.count - 2;
+            this.currentPage += JumpPage;
+            this.renderPage(this.currentPage);
+            this.options.changePage(this.currentPage);
+        },
+        clickInputJump: function(el) {
+            var _this = this;
+            el.addEventListener('click',function() {
+                _this.currentPage = Number(_this.el.querySelector('.page_input').value);
+                _this.renderPage(_this.currentPage);
+            })
+            var input = this.el.querySelector('.page_input');
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    _this.currentPage = Number(input.value);
+                    _this.renderPage(_this.currentPage);
+                    _this.options.changePage(_this.currentPage);
+                }
+            });
+        },
+        selectChangeSize: function(el) {
+            var _this = this;
+            el.addEventListener('change',function(e) {
+                _this.options.pageSize = Number(el.value);
+                _this.totals = Math.ceil(parseInt(_this.options.total) / parseInt(_this.options.pageSize));
+                console.log(_this.totals);
+                _this.renderPage(_this.currentPage);
+                _this.options.changePageSize( _this.options.pageSize);
+            })
+        },
+        bindJumpPageMoreShow: function (el,direction) {
+            var text = '>>';
+            if (direction == 'prev') {
+                text = '<<';
             }
-        })
-        this.pageIndexBox.appendChild(nextPage)
-    }
+            el.addEventListener('mouseenter',function(e) {
+                e.target.innerText = text;
+            })
+            el.addEventListener('mouseleave',function(e) {
+                e.target.innerText = '•••';
+            })
+        },
+        bindClickPage: function() {
+            // 点击页数按钮触发
+            var _this = this;
+            var ul = this.el.getElementsByTagName("ul")[0];
+            var lis = ul.querySelectorAll("li");
+            for (var i = 0;i < lis.length;i ++) {
+                if (lis[i].className.indexOf('prev-page') !== -1 || lis[i].className.indexOf('next-page') !== -1 ||  lis[i].className.indexOf('ellipsis') !== -1 ||
+                    lis[i].className.indexOf('page-to') !== -1 || lis[i].className.indexOf('select-pagesize') !== -1) {
+                }else {
+                    (function(i) {
+                        _this.addEvent(lis[i],'click',function(e) {
+                            // console.log(e.target.innerText);
+                            _this.currentPage = Number(e.target.innerText);
+                            _this.renderPage(_this.currentPage);
+                            _this.options.changePage(_this.currentPage);
+                        })
+                    }(i))
+                }
+            }
 
-    setPage(pageNum = 1, pageSize = 10, total = 8) {
-        this.pageSize = pageSize
-        if (this.total !== total) {
-            this.total = total
-            this.pageIndexBox.innerHTML = ''
-            this.createPageItem()
-        } else if (this.pageNum !== pageNum) {
-            this.pageNum = pageNum
-            this.updateUI()
-        }
-    }
+        },
+        disablePreNext: function() {
+            // 判断是否是第一页或者是最后一页，如果是则给上一页/下一页按钮加上禁用
+            if (this.totals && this.options.count) {
+                var prev = this.el.querySelector(".prev-page");
+                var next = this.el.querySelector('.next-page');
+                if (this.currentPage == 1) {
+                    prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                    prev.setAttribute("disabled", true);
+                }else {
+                    prev.removeAttribute("style");
+                    prev.removeAttribute("disabled");
+                }
+                if (this.currentPage == this.totals) {
+                    next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                    next.setAttribute("disabled", true);
+                }else {
+                    next.removeAttribute("style");
+                    next.removeAttribute("disabled");
+                }
+            }
+        },
+        renderInputJump: function() {
+            var inputJump = `<li class="page-to">跳至<input type="text" class="page_input" />页<span style="visibility: hidden;position: absolute" class="go">GO</span></li>`;
+            return inputJump;
+        },
+        renderPageSize: function() {
+            var pageSize = `<li class="select-pagesize">
+                <select class="select-size">
+                    <option value="8">8条/页</option>
+                    <option value="16">16条/页</option>
+                    <option value="32">32条/页</option>
+                </select>
+            </li>`;
+            return pageSize;
+        },
+        renderPage: function(currentPage) {
+            // 渲染分页
+            var _this = this;
+            var prevHtml = `<li class="prev-page"><a> < </a></li>`;
+            var nextHtml = `<li class="next-page"><a> > </a></li>`;
 
-    // 创建按钮
-    createPageItem() {
-        const pageTotal = Math.ceil(this.total / this.pageSize)
-        const showPageItemNum = pageTotal > 9 ? 9 : pageTotal // 最多展示9个翻页数组按钮
+            var totals = this.totals,
+                counts = Number(this.options.count),
+                halfPagerCount = Math.floor((counts - 2) / 2),
+                firstPageHtml = "",
+                lastPageHtml = "",
+                showPagesHtml = "",
+                showInputJump = "",
+                showSelectSize = "";
+            if (this.options.inputJumpPage) {
+                showInputJump = this.renderInputJump();
+            }
 
-        let needResetPageItem = false
-        if (this.pageItem.length !== showPageItemNum) {
-            needResetPageItem = true
-            this.pageItem = []
-            this.initUI()
-        }
+            if (this.options.selectPageSize) {
+                showSelectSize = this.renderPageSize();
+            }
 
-        for (let i = 0; i < showPageItemNum; i++) {
-            let element
-            if (!needResetPageItem) {
-                element = this.pageItem[i]
-            } else {
-                element = document.createElement('div')
-                element.addEventListener('click', () => {
-                    if (element.innerText === '...') {
-                        if (element.btnType === 'last') {
-                            this.pageNum - 5 >= 0 ? (this.pageNum -= 5) : (this.pageNum = 0)
-                        } else {
-                            this.pageNum + 5 <= pageTotal ? (this.pageNum += 5) : (this.pageNum = pageTotal)
-                        }
-                    } else {
-                        const pageNum = Number(element.innerText)
-                        if (pageNum === this.pageNum) {
-                            return
-                        }
-                        this.pageNum = pageNum
+
+            if (totals) {
+                firstPageHtml = `<li><a>1</a></li>`;
+                if (currentPage === 1) {
+                    firstPageHtml = `<li class="current-page"><a>1</a></li>`;
+                }
+                if (totals > 1) {
+                    lastPageHtml = `<li><a>${totals}</a></li>`;
+                    if (currentPage >= totals) {
+                        this.currentPage = totals;
+                        lastPageHtml = `<li class="current-page"><a>${totals}</a></li>`;
                     }
-                    this.updateUI()
-                    this.callback({
-                        pageNum: this.pageNum,
-                        pageSize: this.pageSize
-                    })
+                }
+                if (totals > counts) {
+                    if (currentPage <= Math.ceil(counts / 2)) {
+                        for (var i = 2;i < counts;i ++) {
+                            if (i === currentPage) {
+                                showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
+                            }else {
+                                showPagesHtml += `<li><a>${i}</a></li>`;
+                            }
+                        }
+                        showPagesHtml += `<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
+                    }else {
+                        if (currentPage > totals - Math.ceil(counts / 2)) {
+                            for (var i = totals - (counts - 2);i < totals;i ++) {
+                                if (i === currentPage) {
+                                    showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
+                                }else {
+                                    showPagesHtml += `<li><a>${i}</a></li>`;
+                                }
+                            }
+                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}${lastPageHtml}`;
+                        }else {
+                            for (var i = currentPage - halfPagerCount;i <= currentPage + halfPagerCount;i ++) {
+                                if (i === currentPage) {
+                                    showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
+                                }else {
+                                    showPagesHtml += `<li><a>${i}</a></li>`;
+                                }
+                            }
+                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
+                        }
+                    }
+                }else {
+                    for (var i = 2;i < totals;i ++) {
+                        if (i === currentPage) {
+                            showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
+                        }else {
+                            showPagesHtml += `<li><a>${i}</a></li>`;
+                        }
+                    }
+                    showPagesHtml += lastPageHtml;
+                }
+
+                var customPaginationHtml = "";
+                if (totals && counts) {
+                    customPaginationHtml = `<ul class="pageWrap">${showSelectSize}${prevHtml}${firstPageHtml}${showPagesHtml}${nextHtml}${showInputJump}</ul>`;
+                    this.el.innerHTML = customPaginationHtml;
+                }
+
+                this.addEvent(this.el.querySelector('.prev-page'),'click',function(e) {
+                    var target = e.target ? e.target: e.srcElement;
+                    var el = target.parentNode;
+                    if (!el.hasAttribute("disabled")) {
+                        _this.prevPage();
+                    }
                 })
-                this.pageItem.push(element)
+
+                this.addEvent(this.el.querySelector('.next-page'),'click',function(e) {
+                    var target = e.target ? e.target: e.srcElement;
+                    var el = target.parentNode;
+                    if (!el.hasAttribute("disabled")) {
+                        _this.nextPage();
+                    }
+                })
+
+                if (this.el.querySelector('.pageJumpPrev')) {
+                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpPrev'),'prev');
+                    this.addEvent(this.el.querySelector('.pageJumpPrev'),'click',function() {
+                        _this.prevJumpPage();
+                    })
+                }
+                if (this.el.querySelector('.pageJumpNext')) {
+                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpNext'),'next');
+                    this.addEvent(this.el.querySelector('.pageJumpNext'),'click',function() {
+                        _this.nextJumpPage();
+                    })
+                }
+                if (this.options.inputJumpPage) {
+                    this.clickInputJump(this.el.querySelector('.go'));
+                }
+                if (this.options.selectPageSize) {
+                    this.el.querySelector('.select-size').value = this.options.pageSize;
+                    this.selectChangeSize(this.el.querySelector('.select-size'));
+                }
+
+
+                this.bindClickPage();
+                this.disablePreNext();
+            }else {
+                var customPaginationHtml = "";
+                customPaginationHtml = `<ul class="pageWrap">${prevHtml}<li><a class="current-page">1</a></li>${nextHtml}</ul>`;
+                this.el.innerHTML = customPaginationHtml;
+                var prev = this.el.querySelector(".prev-page");
+                var next = this.el.querySelector('.next-page');
+
+                prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                prev.setAttribute("disabled", true);
+                next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                next.setAttribute("disabled", true);
             }
-            this.pageIndexBox.insertBefore(element, this.pageIndexBox.lastChild)
+        },
+        addEvent: function(elem, type, fn) {
+            if (elem.attachEvent) {
+                elem.attachEvent("on" + type, fn);
+                return
+            }
+            if (elem.addEventListener) {
+                elem.addEventListener(type, fn, false)
+            }
+        },
+        destroy: function() {
+            // 清空容器
+            this.el.innerHtml = "";
         }
-
-        if (pageTotal > 9) {
-            this.pageItem[1].btnType = 'last'
-            this.pageItem[7].btnType = 'next'
-        }
-
-        this.updateUI()
     }
 
-    updateUI() {
-        const pageTotal = Math.ceil(this.total / this.pageSize)
-        this.totalPageNum.innerText = pageTotal
-        this.totalSize.innerText = this.total
 
-        for (let i = 0; i < this.pageItem.length; i++) {
-            if (this.pageNum < 5) {
-                this.pageItem[i].innerText = i + 1
-            } else if (pageTotal - this.pageNum < 5) {
-                this.pageItem[i].innerText = pageTotal - 8 + i
-            } else {
-                this.pageItem[i].innerText = this.pageNum - 4 + i
-            }
-            if (this.pageNum === Number(this.pageItem[i].innerText)) {
-                this.pageItem[i].className = 'active'
-            } else {
-                this.pageItem[i].className = ''
-            }
-        }
-
-        if (pageTotal > 9) {
-            if (this.pageNum > 4) {
-                this.pageItem[1].innerText = '...'
-                this.pageItem[0].innerText = 1
-            }
-            if (pageTotal - this.pageNum > 4)
-                this.pageItem[7].innerText = '...'
-            this.pageItem[8].innerText = pageTotal
-        }
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = myPage
     }
-}
+    if (typeof define === "function") {
+        define(function() {
+            return myPage
+        })
+    }
+    global.myPage = myPage
+}(this))
