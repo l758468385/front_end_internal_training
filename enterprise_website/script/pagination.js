@@ -1,23 +1,21 @@
-;(function(global) {
-
+(function(global) {
     class MyPage {
         constructor(el, options) {
             this.el = typeof el === "string" ? document.querySelector(el) : el;
-            const defaultOptions = {
+            this.options = {
                 total: 1876,
                 pageSize: 10,
                 pageNum: 1,
                 count: 7,
                 inputJumpPage: true,
                 selectPageSize: true,
-                changePage: function(pageNum) {},
-                changePageSize: function(pageSize) {}
+                changePage: (pageNum) => {},
+                changePageSize: (pageSize) => {},
+                ...options
             };
 
-            this.options = { ...defaultOptions, ...options };
-
             if (this.options.count < 5) {
-                throw new Error('显示按钮个数必须大于等于5啦！！！！！');
+                throw new Error('显示按钮个数必须大于等于5');
             }
 
             this.currentPage = this.options.pageNum;
@@ -83,19 +81,17 @@
 
         bindJumpPageMoreShow(el, direction) {
             const text = direction === 'prev' ? '<<' : '>>';
-
-            el.addEventListener('mouseenter', () => {
-                el.innerText = text;
+            el.addEventListener('mouseenter', (e) => {
+                e.target.innerText = text;
             });
-
-            el.addEventListener('mouseleave', () => {
-                el.innerText = '•••';
+            el.addEventListener('mouseleave', (e) => {
+                e.target.innerText = '•••';
             });
         }
 
         bindClickPage() {
             const ul = this.el.querySelector("ul");
-            const lis = Array.from(ul.querySelectorAll("li"));
+            const lis = ul.querySelectorAll("li");
 
             lis.forEach((li) => {
                 if (!li.classList.contains('prev-page') &&
@@ -113,23 +109,25 @@
         }
 
         disablePreNext() {
-            const prev = this.el.querySelector(".prev-page");
-            const next = this.el.querySelector('.next-page');
+            if (this.totals && this.options.count) {
+                const prev = this.el.querySelector(".prev-page");
+                const next = this.el.querySelector('.next-page');
 
-            if (this.currentPage === 1) {
-                prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                prev.setAttribute("disabled", true);
-            } else {
-                prev.removeAttribute("style");
-                prev.removeAttribute("disabled");
-            }
+                if (this.currentPage === 1) {
+                    prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                    prev.setAttribute("disabled", true);
+                } else {
+                    prev.removeAttribute("style");
+                    prev.removeAttribute("disabled");
+                }
 
-            if (this.currentPage === this.totals) {
-                next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                next.setAttribute("disabled", true);
-            } else {
-                next.removeAttribute("style");
-                next.removeAttribute("disabled");
+                if (this.currentPage === this.totals) {
+                    next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                    next.setAttribute("disabled", true);
+                } else {
+                    next.removeAttribute("style");
+                    next.removeAttribute("disabled");
+                }
             }
         }
 
@@ -139,102 +137,123 @@
 
         renderPageSize() {
             return `<li class="select-pagesize">
-            <select class="select-size">
-                <option value="8">8条/页</option>
-                <option value="16">16条/页</option>
-                <option value="32">32条/页</option>
-            </select>
-        </li>`;
+                <select class="select-size">
+                    <option value="8">8条/页</option>
+                    <option value="16">16条/页</option>
+                    <option value="32">32条/页</option>
+                </select>
+            </li>`;
         }
 
         renderPage(currentPage) {
-            let prevHtml = `<li class="prev-page"><a> < </a></li>`;
-            let nextHtml = `<li class="next-page"><a> > </a></li>`;
-            let firstPageHtml = `<li><a>1</a></li>`;
-            let lastPageHtml = `<li><a>${this.totals}</a></li>`;
+            const prevHtml = `<li class="prev-page"><a> < </a></li>`;
+            const nextHtml = `<li class="next-page"><a> > </a></li>`;
+            const totals = this.totals;
+            const counts = Number(this.options.count);
+            const halfPagerCount = Math.floor((counts - 2) / 2);
+            let firstPageHtml = "";
+            let lastPageHtml = "";
             let showPagesHtml = "";
-
-            if (this.totals > 1) {
-                if (currentPage === 1) {
-                    firstPageHtml = `<li class="current-page"><a>1</a></li>`;
-                }
-                if (currentPage >= this.totals) {
-                    this.currentPage = this.totals;
-                    lastPageHtml = `<li class="current-page"><a>${this.totals}</a></li>`;
-                }
-            }
-
-            if (this.totals > this.options.count) {
-                if (currentPage <= Math.ceil(this.options.count / 2)) {
-                    for (let i = 2; i < this.options.count; i++) {
-                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
-                    }
-                    showPagesHtml += `<li class="ellipsis pageJumpNext" title="向后${this.options.count - 2}页">•••</li>${lastPageHtml}`;
-                } else if (currentPage > this.totals - Math.ceil(this.options.count / 2)) {
-                    for (let i = this.totals - (this.options.count - 2); i < this.totals; i++) {
-                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
-                    }
-                    showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${this.options.count - 2}页">•••</li>${showPagesHtml}${lastPageHtml}`;
-                } else {
-                    for (let i = currentPage - Math.floor((this.options.count - 2) / 2); i <= currentPage + Math.floor((this.options.count - 2) / 2); i++) {
-                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
-                    }
-                    showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${this.options.count - 2}页">•••</li>${showPagesHtml}<li class="ellipsis pageJumpNext" title="向后${this.options.count - 2}页">•••</li>${lastPageHtml}`;
-                }
-            } else {
-                for (let i = 2; i < this.totals; i++) {
-                    showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
-                }
-                showPagesHtml += lastPageHtml;
-            }
-
-            let customPaginationHtml = `<ul class="pageWrap">${this.options.selectPageSize ? this.renderPageSize() : ''}${prevHtml}${firstPageHtml}${showPagesHtml}${nextHtml}${this.options.inputJumpPage ? this.renderInputJump() : ''}</ul>`;
-            this.el.innerHTML = customPaginationHtml;
-
-            this.addEvent(this.el.querySelector('.prev-page'), 'click', () => {
-                if (!this.el.querySelector('.prev-page').hasAttribute("disabled")) {
-                    this.prevPage();
-                }
-            });
-
-            this.addEvent(this.el.querySelector('.next-page'), 'click', () => {
-                if (!this.el.querySelector('.next-page').hasAttribute("disabled")) {
-                    this.nextPage();
-                }
-            });
-
-            if (this.el.querySelector('.pageJumpPrev')) {
-                this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpPrev'), 'prev');
-                this.addEvent(this.el.querySelector('.pageJumpPrev'), 'click', () => {
-                    this.prevJumpPage();
-                });
-            }
-
-            if (this.el.querySelector('.pageJumpNext')) {
-                this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpNext'), 'next');
-                this.addEvent(this.el.querySelector('.pageJumpNext'), 'click', () => {
-                    this.nextJumpPage();
-                });
-            }
+            let showInputJump = "";
+            let showSelectSize = "";
 
             if (this.options.inputJumpPage) {
-                this.clickInputJump(this.el.querySelector('.go'));
+                showInputJump = this.renderInputJump();
             }
 
             if (this.options.selectPageSize) {
-                this.el.querySelector('.select-size').value = this.options.pageSize;
-                this.selectChangeSize(this.el.querySelector('.select-size'));
+                showSelectSize = this.renderPageSize();
             }
 
-            this.bindClickPage();
-            this.disablePreNext();
-        }
+            if (totals) {
+                firstPageHtml = `<li><a>1</a></li>`;
+                if (currentPage === 1) {
+                    firstPageHtml = `<li class="current-page"><a>1</a></li>`;
+                }
+                if (totals > 1) {
+                    lastPageHtml = `<li><a>${totals}</a></li>`;
+                    if (currentPage >= totals) {
+                        this.currentPage = totals;
+                        lastPageHtml = `<li class="current-page"><a>${totals}</a></li>`;
+                    }
+                }
+                if (totals > counts) {
+                    if (currentPage <= Math.ceil(counts / 2)) {
+                        for (let i = 2; i < counts; i++) {
+                            showPagesHtml += i === currentPage ? `<li class="current-page"><a>${i}</a></li>` : `<li><a>${i}</a></li>`;
+                        }
+                        showPagesHtml += `<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
+                    } else {
+                        if (currentPage > totals - Math.ceil(counts / 2)) {
+                            for (let i = totals - (counts - 2); i < totals; i++) {
+                                showPagesHtml += i === currentPage ? `<li class="current-page"><a>${i}</a></li>` : `<li><a>${i}</a></li>`;
+                            }
+                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}${lastPageHtml}`;
+                        } else {
+                            for (let i = currentPage - halfPagerCount; i <= currentPage + halfPagerCount; i++) {
+                                showPagesHtml += i === currentPage ? `<li class="current-page"><a>${i}</a></li>` : `<li><a>${i}</a></li>`;
+                            }
+                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
+                        }
+                    }
+                } else {
+                    for (let i = 2; i < totals; i++) {
+                        showPagesHtml += i === currentPage ? `<li class="current-page"><a>${i}</a></li>` : `<li><a>${i}</a></li>`;
+                    }
+                    showPagesHtml += lastPageHtml;
+                }
 
-        addEvent(elem, type, fn) {
-            if (elem.attachEvent) {
-                elem.attachEvent("on" + type, fn);
-            } else if (elem.addEventListener) {
-                elem.addEventListener(type, fn, false);
+                let customPaginationHtml = `<ul class="pageWrap">${showSelectSize}${prevHtml}${firstPageHtml}${showPagesHtml}${nextHtml}${showInputJump}</ul>`;
+                this.el.innerHTML = customPaginationHtml;
+
+                this.el.querySelector('.prev-page').addEventListener('click', (e) => {
+                    const el = e.currentTarget;
+                    if (!el.hasAttribute("disabled")) {
+                        this.prevPage();
+                    }
+                });
+
+                this.el.querySelector('.next-page').addEventListener('click', (e) => {
+                    const el = e.currentTarget;
+                    if (!el.hasAttribute("disabled")) {
+                        this.nextPage();
+                    }
+                });
+
+                if (this.el.querySelector('.pageJumpPrev')) {
+                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpPrev'), 'prev');
+                    this.el.querySelector('.pageJumpPrev').addEventListener('click', () => {
+                        this.prevJumpPage();
+                    });
+                }
+
+                if (this.el.querySelector('.pageJumpNext')) {
+                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpNext'), 'next');
+                    this.el.querySelector('.pageJumpNext').addEventListener('click', () => {
+                        this.nextJumpPage();
+                    });
+                }
+
+                if (this.options.inputJumpPage) {
+                    this.clickInputJump(this.el.querySelector('.go'));
+                }
+
+                if (this.options.selectPageSize) {
+                    this.el.querySelector('.select-size').value = this.options.pageSize;
+                    this.selectChangeSize(this.el.querySelector('.select-size'));
+                }
+
+                this.bindClickPage();
+                this.disablePreNext();
+            } else {
+                this.el.innerHTML = `<ul class="pageWrap">${prevHtml}<li><a class="current-page">1</a></li>${nextHtml}</ul>`;
+                const prev = this.el.querySelector(".prev-page");
+                const next = this.el.querySelector('.next-page');
+
+                prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                prev.setAttribute("disabled", true);
+                next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                next.setAttribute("disabled", true);
             }
         }
 
@@ -244,12 +263,10 @@
     }
 
     if (typeof module !== "undefined" && module.exports) {
+
+        console.log('nnnn')
         module.exports = MyPage;
     }
 
-    if (typeof define === "function") {
-        define(() => MyPage);
-    }
-
-    global.MyPage = MyPage
-}(this))
+    global.MyPage = MyPage;
+}(this));

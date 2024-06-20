@@ -7,7 +7,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>新闻列表</title>
-    <script src="tailwindcss.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles/header.css" />
     <link rel="stylesheet" href="styles/news.css" />
     <link rel="stylesheet" href="styles/pagination.css" />
@@ -60,7 +60,6 @@
         </div>
     </footer>
 
-    <script src="script/about.js"></script>
     <script src="script/utils.js"></script>
     <script src="script/pagination.js"></script>
     <script>
@@ -78,6 +77,13 @@
             pageSize = +urlPageSize;
         }
 
+        function scrollToTop() {
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth' // 平滑滚动
+            });
+        }
         function setupPagination(totalPages) {
             new MyPage('#myPage', {
                 total: totalPages,
@@ -87,11 +93,13 @@
                 inputJumpPage: true,
                 selectPageSize: true,
                 changePage: function (Num) {
+                    scrollToTop()
                     pageNum = Num;
                     fetchNews(Num, pageSize);
                     history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
                 },
                 changePageSize: function (size) {
+                    scrollToTop()
                     pageSize = size;
                     fetchNews(1, pageSize);
                     history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
