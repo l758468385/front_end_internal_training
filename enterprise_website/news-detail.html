@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>关于我们</title>
+    <title>新闻详情</title>
     <script src="tailwindcss.js"></script>
     <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     <link rel="stylesheet" href="styles/header.css"/>
@@ -43,7 +43,7 @@
     <div class="flex flex-col items-center">
         <h2 class="text-5xl mt-24 text-[#000000]">新闻详情页</h2>
         <div class="split-line"></div>
-        <div class="container mb-10" id="news-detail-container">
+        <div class="container mb-10 text-center" id="news-detail-container">
         </div>
     </div>
 </main>
@@ -104,10 +104,15 @@
         const newsElement = document.createElement('div');
         newsElement.classList.add('news-item');
 
-        newsElement.innerHTML = `
-
-                <div class="content">${newsDetails.content}</div>
-            `;
+        newsElement.innerHTML =  `
+            <div class="news-header">
+                <img src="${newsDetails.picture}" alt="主图" class="main-image">
+                <h1 class="title">${newsDetails.title}</h1>
+                <div class="news-info"><p class="time">发布时间: ${newsDetails.time}</p>
+                <p class="source">来源: ${newsDetails.source}</p></div>
+            </div>
+            <div class="news-content ">${newsDetails.content}</div>
+        `;
 
         newsContainer.appendChild(newsElement);
     }
