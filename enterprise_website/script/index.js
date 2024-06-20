@@ -39,15 +39,21 @@ document.addEventListener("DOMContentLoaded", function () {
             let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
-                        let lazyPicture = entry.target;
-                        const sources = lazyPicture.querySelectorAll("source");
-                        sources.forEach(source => {
-                            source.srcset = source.dataset.srcset;
-                        });
-                        const img = lazyPicture.querySelector("img");
-                        img.src = img.dataset.src;
-                        lazyPicture.classList.remove("lazy");
-                        lazyImageObserver.unobserve(lazyPicture);
+                        let lazyElement = entry.target;
+
+                        if (lazyElement.tagName.toLowerCase() === 'picture') {
+                            const sources = lazyElement.querySelectorAll("source");
+                            sources.forEach(source => {
+                                source.srcset = source.dataset.srcset;
+                            });
+                            const img = lazyElement.querySelector("img");
+                            img.src = img.dataset.src;
+                        } else if (lazyElement.tagName.toLowerCase() === 'img') {
+                            lazyElement.src = lazyElement.dataset.src;
+                        }
+
+                        lazyElement.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyElement);
                     }
                 });
             });
@@ -58,15 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // 退回到事件监听（旧浏览器支持）
             let lazyLoad = function() {
-                lazyImages.forEach(function(lazyPicture) {
-                    if (lazyPicture.getBoundingClientRect().top <= window.innerHeight && lazyPicture.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyPicture).display !== "none") {
-                        const sources = lazyPicture.querySelectorAll("source");
-                        sources.forEach(source => {
-                            source.srcset = source.dataset.srcset;
-                        });
-                        const img = lazyPicture.querySelector("img");
-                        img.src = img.dataset.src;
-                        lazyPicture.classList.remove("lazy");
+                lazyImages.forEach(function(lazyElement) {
+                    if (lazyElement.getBoundingClientRect().top <= window.innerHeight && lazyElement.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyElement).display !== "none") {
+                        if (lazyElement.tagName.toLowerCase() === 'picture') {
+                            const sources = lazyElement.querySelectorAll("source");
+                            sources.forEach(source => {
+                                source.srcset = source.dataset.srcset;
+                            });
+                            const img = lazyElement.querySelector("img");
+                            img.src = img.dataset.src;
+                        } else if (lazyElement.tagName.toLowerCase() === 'img') {
+                            lazyElement.src = lazyElement.dataset.src;
+                        }
+                        lazyElement.classList.remove("lazy");
                     }
                 });
 
@@ -120,9 +130,9 @@ document.addEventListener("DOMContentLoaded", function () {
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">
-                <img data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] lazy"  alt="">
-                <h2 class="text-xl leading-9 block mt-9 mb-7" style="color: #fafafa">${news.title}</h2>
-                <h2 class="text-sm">${news.summary}</h2>
+                <img data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] hide-ele lazy hot-news-img"  alt="">
+                <h2 class="text-xl leading-9 block mt-9 mb-7 hide-ele" style="color: #fafafa">${news.title}</h2>
+                <h2 class="text-sm hide-ele">${news.summary}</h2>
             </a>
         `;
             hotNewsContainer.appendChild(newsElement);

@@ -102,16 +102,16 @@
 main img {
     cursor: pointer;
 }
-.service-wrap img:hover,
-.news-wrap img:hover {
+.service-wrap img:hover{
     box-shadow: 0 16px 32px 0 rgba(10, 16, 34, .2), 0 0 0 transparent;
     transform: translateY(-5px) translateZ(0);
     transition: transform .2s ease, box-shadow .2s ease, -webkit-transform .2s ease, -webkit-box-shadow .2s ease;
 }
 
-
+.team-wrap img {
+    transition: transform 0.5s ;
+}
 .team-wrap img:hover {
-    transition: transform 0.5s ease;
     transform: scale(1.02); /* 放大比例 */
     z-index: 2;
     position: relative;
@@ -206,5 +206,11 @@ main img {
 /*新闻动态*/
 .news-wrap {
     background-color: #252429;
+}
+.news-wrap img {
+    transition: transform 0.5s;
+}
+.news-wrap img:hover {
+    transform: scale(1.05);
 }
 
