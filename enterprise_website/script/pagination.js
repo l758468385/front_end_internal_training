@@ -313,5 +313,5 @@
             return myPage
         })
     }
-    global.myPage = myPage
+    global.MyPage = myPage
 }(this))

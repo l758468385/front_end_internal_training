@@ -66,12 +66,20 @@
     <script>
         let pageNum = 1;
         let pageSize = 8;
-        const sessionPageNum = sessionStorage.getItem('pageNum');
-        console.log('sessionPageNum', sessionPageNum);
-        if (sessionPageNum) pageNum = +sessionPageNum;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlPageNum = urlParams.get('pageNum');
+        const urlPageSize = urlParams.get('pageSize');
+
+        if (urlPageNum) {
+            pageNum = +urlPageNum;
+        }
+        if (urlPageSize) {
+            pageSize = +urlPageSize;
+        }
 
         function setupPagination(totalPages) {
-            new myPage('#myPage', {
+            new MyPage('#myPage', {
                 total: totalPages,
                 pageSize: pageSize,
                 pageNum: pageNum,
@@ -81,11 +89,12 @@
                 changePage: function (Num) {
                     pageNum = Num;
                     fetchNews(Num, pageSize);
-                    sessionStorage.setItem('pageNum', Num);
+                    history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
                 },
                 changePageSize: function (size) {
                     pageSize = size;
                     fetchNews(1, pageSize);
+                    history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
                 }
             });
         }
