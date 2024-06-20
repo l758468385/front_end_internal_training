@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (index === 0) {
             slideElement.classList.add("active");
         }
-        slideElement.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" class="w-full h-full object-cover">`;
+        slideElement.innerHTML = `<img data-src="${slide.src}" alt="${slide.alt}" class="w-full h-full object-cover lazy">`;
         carouselInner.appendChild(slideElement);
 
         const indicator = document.createElement("div");

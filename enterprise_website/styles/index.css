@@ -1,38 +1,33 @@
 .carousel {
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .carousel-inner {
     position: relative;
     display: flex;
-    /*transition: transform 0.5s ease-in-out; !* 添加过渡效果 *!*/
+    transition: transform 0.5s ease-in-out;
 }
 
 .carousel-item {
     flex: 0 0 100%;
-    /*  opacity: 0; !* 初始状态为透明 *!
-    transition: opacity 0.5s ease-in-out; !* 渐显效果 *!*/
+    transition: opacity 0.5s ease-in-out;
 }
-
+.carousel-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .carousel-item.active {
-    /*opacity: 1; !* 显示状态为不透明 *!*/
-    animation: fade-out 1s ease-out both;
+    animation: fade-in 1.2s both;
 }
 
-@keyframes fade-out {
+@keyframes fade-in {
     0% {
         opacity: 0;
     }
-
-    30% {
-        opacity: .3;
-    }
-
-    60% {
-        opacity: .6;
-    }
-
     100% {
         opacity: 1;
     }

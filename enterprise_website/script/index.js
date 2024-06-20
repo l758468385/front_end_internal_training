@@ -31,6 +31,48 @@ document.addEventListener("DOMContentLoaded", function () {
         parallaxElement.style.backgroundPositionY = -scrollTop * 0.5 + 'px';
     });
 
+
+    function lazyLoadImg() {
+        let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+
+        if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        let lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyImage);
+                    }
+                });
+            });
+
+            lazyImages.forEach(function(lazyImage) {
+                lazyImageObserver.observe(lazyImage);
+            });
+        } else {
+            // 退回到事件监听（旧浏览器支持）
+            let lazyLoad = function() {
+                lazyImages.forEach(function(lazyImage) {
+                    if (lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyImage).display !== "none") {
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove("lazy");
+                    }
+                });
+
+                if (lazyImages.length === 0) {
+                    document.removeEventListener("scroll", lazyLoad);
+                    window.removeEventListener("resize", lazyLoad);
+                    window.removeEventListener("orientationchange", lazyLoad);
+                }
+            };
+
+            document.addEventListener("scroll", lazyLoad);
+            window.addEventListener("resize", lazyLoad);
+            window.addEventListener("orientationchange", lazyLoad);
+        }
+    }
+
     function fetchHotNews() {
         fetch('http://127.0.0.1:3000/hot-news', {
             method: 'get',
@@ -68,17 +110,20 @@ document.addEventListener("DOMContentLoaded", function () {
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">
-                <img src="${news.cover}" class="w-full h-[300px] md:h-[506px]" alt="">
+                <img data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] lazy"  alt="">
                 <h2 class="text-xl leading-9 block mt-9 mb-7" style="color: #fafafa">${news.title}</h2>
                 <h2 class="text-sm">${news.summary}</h2>
             </a>
         `;
             hotNewsContainer.appendChild(newsElement);
         });
-
+        lazyLoadImg()
         addAnimation()
     }
 
     fetchHotNews();
+
+
+
 
 });
