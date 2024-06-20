@@ -1,0 +1,12 @@
+#map-container {
+  width: 100%;
+  height: 300px;
+}
+
+.marker {
+
+}
+
+.custom-content-marker img {
+  width:30px;
+}

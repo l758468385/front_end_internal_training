@@ -1,59 +1,99 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>关于我们</title>
     <script src="tailwindcss.js"></script>
     <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-    <link rel="stylesheet" href="styles/header.css"/>
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/about.css" />
+
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://webapi.amap.com/maps?v=2.0&key=22c322c1c58d327ce51fd90f971cbc0f"></script>
 </head>
+
 <body>
-<header class="relative w-full ">
-    <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white ">
-        <div class="font-semibold text-xl ml-12 ">企业官网</div>
-        <div class="menuBtn   block md:hidden">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <!-- 移动端 -->
-        <nav class="block md:hidden " id="navBox">
-            <div class="links-wrap">
-                <a  class="text-lg" href="index.html" >首页</a>
-                <a  class="text-lg" href="news.html" >新闻动态页</a>
-                <a  class="text-lg" href="about.html" >关于我们</a>
+    <header class="relative w-full ">
+        <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white ">
+            <div class="font-semibold text-xl ml-12 ">企业官网</div>
+            <div class="menuBtn   block md:hidden">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-        </nav>
-        <nav class="mr-[280px] hidden md:block">
-            <a  href="index.html" class="nav-link ">首页</a>
-            <a  href="news.html" class="nav-link mx-14">新闻动态页</a>
-            <a  href="about.html" class="nav-link active">关于我们</a>
-        </nav>
-    </div>
+            <!-- 移动端 -->
+            <nav class="block md:hidden " id="navBox">
+                <div class="links-wrap">
+                    <a class="text-lg" href="index.html">首页</a>
+                    <a class="text-lg" href="news.html">新闻动态页</a>
+                    <a class="text-lg" href="about.html">关于我们</a>
+                </div>
+            </nav>
+            <nav class="mr-[280px] hidden md:block">
+                <a href="index.html" class="nav-link ">首页</a>
+                <a href="news.html" class="nav-link mx-14">新闻动态页</a>
+                <a href="about.html" class="nav-link active">关于我们</a>
+            </nav>
+        </div>
 
 
 
-</header>
+    </header>
+
+    <main class="bg-white container m-auto mb-10">
+        <div class="flex flex-col items-center">
+            <h2 class="text-5xl mt-24 text-[#000000]">关于我们</h2>
+            <div class="split-line" style="background-color: #FF350D;width: 128px;height: 6px; margin: 32px 0;"></div>
+            <div class="container p-5 m-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div id="map-container"  style="background-color: red;">
+                </div>
+                <div class="text-gray-800">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4">一家专注系统高端定制开发的公司</h2>
+                    <p class="text-base md:text-lg leading-relaxed mb-4">
+                        互联网指的是以网络与网络之间所串连成的庞大网络，这些网络以一组通用的协议相连，形成逻辑上的单一巨
+                        大国际网络。
+                    </p>
+                    <p class="text-base md:text-lg leading-relaxed mb-4">
+                        互联网起源于1969年美国的阿帕网。这种将计算机网络互相联接在一起的方法称作“网络互联”，在这种基础上发展
+                        出覆盖全世界的全球性互联网络称互联网，即是互相连接一起的网络结构。
+                    </p>
+                    <p class="text-base md:text-lg leading-relaxed mb-4">
+                        我们由出色的专业开发团队扎实的技术支持，优质高效的服务意识和丰厚的资源优势，提供专业的微信公众号，微
+                        信小程序，APP开发，等技术服务。专注于为客户提供专业有效的互联网系统解决方案。
+                    </p>
+                    <p class="text-base md:text-lg leading-relaxed mb-4">
+                        <strong>地址：</strong> 中国山东省青岛市市南区某某路20号
+                    </p>
+                    <p class="text-base md:text-lg leading-relaxed mb-4">
+                        <strong>邮箱：</strong> 137XXXX711@qq.com
+                    </p>
+                    <p class="text-base md:text-lg leading-relaxed">
+                        <strong>电话：</strong> 0591-88888888
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
 
 
+    <footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
+        <div class="  mb-5	flex flex-col  md:flex-row">
+            <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
+            <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
+            <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
+        </div>
+        <div class="flex items-center justify-center p-2">
+            <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
+            <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有 陕ICP备xxxxxxx号</span>
+        </div>
+    </footer>
 
-
-<footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
-    <div class="  mb-5	flex flex-col  md:flex-row">
-        <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
-        <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
-        <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
-    </div>
-    <div class="flex items-center justify-center p-2">
-        <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
-        <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有  陕ICP备xxxxxxx号</span>
-    </div>
-</footer>
-
-<script src="script/about.js"></script>
-<script src="script/utils.js"></script>
+    <script src="script/about.js"></script>
+    <script src="script/utils.js"></script>
 </body>
+
 </html>
