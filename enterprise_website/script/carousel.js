@@ -4,9 +4,27 @@ document.addEventListener("DOMContentLoaded", function() {
     const indicatorsContainer = carousel.querySelector(".indicators");
 
     const slidesData = [
-        { src: "static/slide1.jpg", alt: "Slide 1" },
-        { src: "static/slide2.jpg", alt: "Slide 2" },
-        { src: "static/slide3.jpg", alt: "Slide 3" },
+        {
+            src: "static/slide1.jpg",
+            alt: "Slide 1",
+            small: "static/slide1-small.jpg",
+            medium: "static/slide1-medium.jpg",
+            large: "static/slide1-large.jpg"
+        },
+        {
+            src: "static/slide2.jpg",
+            alt: "Slide 2",
+            small: "static/slide2-small.jpg",
+            medium: "static/slide2-medium.jpg",
+            large: "static/slide2-large.jpg"
+        },
+        {
+            src: "static/slide3.jpg",
+            alt: "Slide 3",
+            small: "static/slide3-small.jpg",
+            medium: "static/slide3-medium.jpg",
+            large: "static/slide3-large.jpg"
+        },
         // 更多图片数据
     ];
 
@@ -22,7 +40,13 @@ document.addEventListener("DOMContentLoaded", function() {
         if (index === 0) {
             slideElement.classList.add("active");
         }
-        slideElement.innerHTML = `<img data-src="${slide.src}" alt="${slide.alt}" class="w-full h-full object-cover lazy">`;
+        slideElement.innerHTML = `
+            <picture  class="lazy">
+                <source media="(max-width: 600px)" data-srcset="${slide.small}">
+                <source media="(min-width: 601px)" data-srcset="${slide.medium}">
+                <img data-src="${slide.large}" alt="${slide.alt}">
+            </picture>
+        `;
         carouselInner.appendChild(slideElement);
 
         const indicator = document.createElement("div");
@@ -69,10 +93,8 @@ document.addEventListener("DOMContentLoaded", function() {
         indicators[currentIndex].classList.remove("active");
         indicators[index].classList.add("active");
 
-
-        slides.forEach((carouselItem,carouselIndex) => {
-            carouselIndex === index ? carouselItem.classList.add('active') : carouselItem.classList.remove('active');
-        })
+        slides[currentIndex].classList.remove("active");
+        slides[index].classList.add("active");
 
         // 移动幻灯片容器以显示指定幻灯片
         const slideWidth = slides[0].clientWidth;

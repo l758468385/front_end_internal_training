@@ -33,16 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function lazyLoadImg() {
-        let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+        let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy"));
 
         if ("IntersectionObserver" in window) {
             let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
-                        let lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                        lazyImage.classList.remove("lazy");
-                        lazyImageObserver.unobserve(lazyImage);
+                        let lazyPicture = entry.target;
+                        const sources = lazyPicture.querySelectorAll("source");
+                        sources.forEach(source => {
+                            source.srcset = source.dataset.srcset;
+                        });
+                        const img = lazyPicture.querySelector("img");
+                        img.src = img.dataset.src;
+                        lazyPicture.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyPicture);
                     }
                 });
             });
@@ -53,10 +58,15 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // 退回到事件监听（旧浏览器支持）
             let lazyLoad = function() {
-                lazyImages.forEach(function(lazyImage) {
-                    if (lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyImage).display !== "none") {
-                        lazyImage.src = lazyImage.dataset.src;
-                        lazyImage.classList.remove("lazy");
+                lazyImages.forEach(function(lazyPicture) {
+                    if (lazyPicture.getBoundingClientRect().top <= window.innerHeight && lazyPicture.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyPicture).display !== "none") {
+                        const sources = lazyPicture.querySelectorAll("source");
+                        sources.forEach(source => {
+                            source.srcset = source.dataset.srcset;
+                        });
+                        const img = lazyPicture.querySelector("img");
+                        img.src = img.dataset.src;
+                        lazyPicture.classList.remove("lazy");
                     }
                 });
 
