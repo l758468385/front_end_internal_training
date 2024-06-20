@@ -35,24 +35,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function lazyLoadImg() {
         let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy"));
 
+        function loadImage(lazyElement) {
+            if (lazyElement.tagName.toLowerCase() === 'picture') {
+                const sources = lazyElement.querySelectorAll("source");
+                sources.forEach(source => {
+                    source.srcset = source.dataset.srcset;
+                });
+                const img = lazyElement.querySelector("img");
+                img.src = img.dataset.src;
+            } else if (lazyElement.tagName.toLowerCase() === 'img') {
+                lazyElement.src = lazyElement.dataset.src;
+            }
+            lazyElement.classList.remove("lazy");
+        }
+
         if ("IntersectionObserver" in window) {
             let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         let lazyElement = entry.target;
-
-                        if (lazyElement.tagName.toLowerCase() === 'picture') {
-                            const sources = lazyElement.querySelectorAll("source");
-                            sources.forEach(source => {
-                                source.srcset = source.dataset.srcset;
-                            });
-                            const img = lazyElement.querySelector("img");
-                            img.src = img.dataset.src;
-                        } else if (lazyElement.tagName.toLowerCase() === 'img') {
-                            lazyElement.src = lazyElement.dataset.src;
-                        }
-
-                        lazyElement.classList.remove("lazy");
+                        loadImage(lazyElement);
                         lazyImageObserver.unobserve(lazyElement);
                     }
                 });
@@ -66,19 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
             let lazyLoad = function() {
                 lazyImages.forEach(function(lazyElement) {
                     if (lazyElement.getBoundingClientRect().top <= window.innerHeight && lazyElement.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyElement).display !== "none") {
-                        if (lazyElement.tagName.toLowerCase() === 'picture') {
-                            const sources = lazyElement.querySelectorAll("source");
-                            sources.forEach(source => {
-                                source.srcset = source.dataset.srcset;
-                            });
-                            const img = lazyElement.querySelector("img");
-                            img.src = img.dataset.src;
-                        } else if (lazyElement.tagName.toLowerCase() === 'img') {
-                            lazyElement.src = lazyElement.dataset.src;
-                        }
-                        lazyElement.classList.remove("lazy");
+                        loadImage(lazyElement);
                     }
                 });
+
+                lazyImages = lazyImages.filter(img => img.classList.contains("lazy"));
 
                 if (lazyImages.length === 0) {
                     document.removeEventListener("scroll", lazyLoad);

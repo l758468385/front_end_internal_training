@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
             medium: "static/slide3-medium.jpg",
             large: "static/slide3-large.jpg"
         },
-        // 更多图片数据
     ];
 
     let currentIndex = 0;
