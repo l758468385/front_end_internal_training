@@ -128,7 +128,7 @@
             newsContainer.innerHTML = ''; // 清空当前内容
 
             newsList.forEach(news => {
-                console.log('news', news)
+                console.log('news', news);
                 const newsItem = document.createElement('div');
                 newsItem.className = 'news-item';
 
@@ -136,15 +136,15 @@
                 newsLink.href = `news-detail.html?id=${news.id}`;
 
                 const newsImage = document.createElement('img');
-                newsImage.src = news.cover;
-                newsImage.className = 'w-full h-[300px] md:h-[506px] hide-ele';
+                newsImage.src = 'static/placeholder.png'; // 设置小图的地址为 placeholder.jpg
+                newsImage.className = 'w-full h-[300px] md:h-[506px] hide-ele blur-image relative';
                 newsImage.alt = '新闻封面';
 
                 const newsTitle = document.createElement('h2');
                 newsTitle.className = 'text-xl text-[#000000] leading-9 block mt-9 mb-7 hide-ele';
                 newsTitle.textContent = news.title;
 
-                const newsContent = document.createElement('h2');
+                const newsContent = document.createElement('p'); // 将新闻摘要改为 <p> 元素
                 newsContent.className = 'text-sm text-[#353535] hide-ele';
                 newsContent.textContent = news.summary;
 
@@ -157,10 +157,18 @@
                 newsContainer.appendChild(newsItem);
 
                 newsLink.addEventListener('click', function (event) {
-
                 });
+
+                // 加载大图像，并在加载完成后替换小图
+                const largeImage = new Image();
+                largeImage.onload = function () {
+                    newsImage.src = largeImage.src; // 替换为大图的地址
+                    newsImage.classList.remove('blur-image'); // 移除毛玻璃效
+                };
+                largeImage.src = news.cover; // 加载大图
             });
         }
+
 
         // 初次加载第一页新闻数据
         fetchNews(pageNum, pageSize);
