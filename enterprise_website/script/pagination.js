@@ -1,317 +1,255 @@
 ;(function(global) {
 
-    function myPage(el, options) {
-        this.el = typeof el === "string" ? document.querySelector(el) : el;
-        var default_options = {
-            total: 1876,   // 数据总条数
-            pageSize: 10,   // 每页默认显示数量
-            pageNum: 1,   // 初始化页码
-            count: 7,   // 显示按钮个数
-            inputJumpPage: true,  // 是否开启输入框跳转页面
-            selectPageSize: true,  // 是否开启选择每页显示数据量
-            changePage: function(pageNum) {
+    class MyPage {
+        constructor(el, options) {
+            this.el = typeof el === "string" ? document.querySelector(el) : el;
+            const defaultOptions = {
+                total: 1876,
+                pageSize: 10,
+                pageNum: 1,
+                count: 7,
+                inputJumpPage: true,
+                selectPageSize: true,
+                changePage: function(pageNum) {},
+                changePageSize: function(pageSize) {}
+            };
 
-            },
-            changePageSize: function(pageSize) {
+            this.options = { ...defaultOptions, ...options };
 
+            if (this.options.count < 5) {
+                throw new Error('显示按钮个数必须大于等于5啦！！！！！');
             }
-        }
-        if (options) {
-            for (let prop in options) {
-                default_options[prop] = options[prop];
-            }
-        }
-        this.options = default_options;
-        if (this.options.count < 5) {
-            throw new Error('显示按钮个数必须大于等于5')
-        }
-        this.currentPage = default_options.pageNum;
-        this.totals = Math.ceil(parseInt(this.options.total) / parseInt(this.options.pageSize));   // 上取整，根据总数据量和每页显示数据量计算出总页数
-        this.init();    // 初始化分页器
-    }
 
-    myPage.prototype = {
-        init: function() {
+            this.currentPage = this.options.pageNum;
+            this.totals = Math.ceil(parseInt(this.options.total) / parseInt(this.options.pageSize));
+            this.init();
+        }
+
+        init() {
             this.destroy();
             this.renderPage(this.currentPage);
-        },
-        prevPage: function() {
-            // 点击上翻一页
-            this.currentPage --;
+        }
+
+        prevPage() {
+            this.currentPage--;
             this.renderPage(this.currentPage);
             this.options.changePage(this.currentPage);
-        },
-        nextPage: function() {
-            // 点击下翻一页触发
-            this.currentPage ++;
+        }
+
+        nextPage() {
+            this.currentPage++;
             this.renderPage(this.currentPage);
             this.options.changePage(this.currentPage);
-        },
-        prevJumpPage: function() {
-            // 点击上翻几页
-            var JumpPage = this.options.count - 2;
-            this.currentPage -= JumpPage;
+        }
+
+        prevJumpPage() {
+            const jumpPage = this.options.count - 2;
+            this.currentPage -= jumpPage;
             this.renderPage(this.currentPage);
             this.options.changePage(this.currentPage);
-        },
-        nextJumpPage: function() {
-            // 点击下翻几页
-            var JumpPage = this.options.count - 2;
-            this.currentPage += JumpPage;
+        }
+
+        nextJumpPage() {
+            const jumpPage = this.options.count - 2;
+            this.currentPage += jumpPage;
             this.renderPage(this.currentPage);
             this.options.changePage(this.currentPage);
-        },
-        clickInputJump: function(el) {
-            var _this = this;
-            el.addEventListener('click',function() {
-                _this.currentPage = Number(_this.el.querySelector('.page_input').value);
-                _this.renderPage(_this.currentPage);
-            })
-            var input = this.el.querySelector('.page_input');
-            input.addEventListener('keydown', function(e) {
+        }
+
+        clickInputJump(el) {
+            el.addEventListener('click', () => {
+                this.currentPage = Number(this.el.querySelector('.page_input').value);
+                this.renderPage(this.currentPage);
+            });
+
+            const input = this.el.querySelector('.page_input');
+            input.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.keyCode === 13) {
-                    _this.currentPage = Number(input.value);
-                    _this.renderPage(_this.currentPage);
-                    _this.options.changePage(_this.currentPage);
+                    this.currentPage = Number(input.value);
+                    this.renderPage(this.currentPage);
+                    this.options.changePage(this.currentPage);
                 }
             });
-        },
-        selectChangeSize: function(el) {
-            var _this = this;
-            el.addEventListener('change',function(e) {
-                _this.options.pageSize = Number(el.value);
-                _this.totals = Math.ceil(parseInt(_this.options.total) / parseInt(_this.options.pageSize));
-                console.log(_this.totals);
-                _this.renderPage(_this.currentPage);
-                _this.options.changePageSize( _this.options.pageSize);
-            })
-        },
-        bindJumpPageMoreShow: function (el,direction) {
-            var text = '>>';
-            if (direction == 'prev') {
-                text = '<<';
-            }
-            el.addEventListener('mouseenter',function(e) {
-                e.target.innerText = text;
-            })
-            el.addEventListener('mouseleave',function(e) {
-                e.target.innerText = '•••';
-            })
-        },
-        bindClickPage: function() {
-            // 点击页数按钮触发
-            var _this = this;
-            var ul = this.el.getElementsByTagName("ul")[0];
-            var lis = ul.querySelectorAll("li");
-            for (var i = 0;i < lis.length;i ++) {
-                if (lis[i].className.indexOf('prev-page') !== -1 || lis[i].className.indexOf('next-page') !== -1 ||  lis[i].className.indexOf('ellipsis') !== -1 ||
-                    lis[i].className.indexOf('page-to') !== -1 || lis[i].className.indexOf('select-pagesize') !== -1) {
-                }else {
-                    (function(i) {
-                        _this.addEvent(lis[i],'click',function(e) {
-                            // console.log(e.target.innerText);
-                            _this.currentPage = Number(e.target.innerText);
-                            _this.renderPage(_this.currentPage);
-                            _this.options.changePage(_this.currentPage);
-                        })
-                    }(i))
+        }
+
+        selectChangeSize(el) {
+            el.addEventListener('change', (e) => {
+                this.options.pageSize = Number(el.value);
+                this.totals = Math.ceil(parseInt(this.options.total) / parseInt(this.options.pageSize));
+                this.renderPage(this.currentPage);
+                this.options.changePageSize(this.options.pageSize);
+            });
+        }
+
+        bindJumpPageMoreShow(el, direction) {
+            const text = direction === 'prev' ? '<<' : '>>';
+
+            el.addEventListener('mouseenter', () => {
+                el.innerText = text;
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.innerText = '•••';
+            });
+        }
+
+        bindClickPage() {
+            const ul = this.el.querySelector("ul");
+            const lis = Array.from(ul.querySelectorAll("li"));
+
+            lis.forEach((li) => {
+                if (!li.classList.contains('prev-page') &&
+                    !li.classList.contains('next-page') &&
+                    !li.classList.contains('ellipsis') &&
+                    !li.classList.contains('page-to') &&
+                    !li.classList.contains('select-pagesize')) {
+                    li.addEventListener('click', (e) => {
+                        this.currentPage = Number(e.target.innerText);
+                        this.renderPage(this.currentPage);
+                        this.options.changePage(this.currentPage);
+                    });
                 }
+            });
+        }
+
+        disablePreNext() {
+            const prev = this.el.querySelector(".prev-page");
+            const next = this.el.querySelector('.next-page');
+
+            if (this.currentPage === 1) {
+                prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                prev.setAttribute("disabled", true);
+            } else {
+                prev.removeAttribute("style");
+                prev.removeAttribute("disabled");
             }
 
-        },
-        disablePreNext: function() {
-            // 判断是否是第一页或者是最后一页，如果是则给上一页/下一页按钮加上禁用
-            if (this.totals && this.options.count) {
-                var prev = this.el.querySelector(".prev-page");
-                var next = this.el.querySelector('.next-page');
-                if (this.currentPage == 1) {
-                    prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                    prev.setAttribute("disabled", true);
-                }else {
-                    prev.removeAttribute("style");
-                    prev.removeAttribute("disabled");
-                }
-                if (this.currentPage == this.totals) {
-                    next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                    next.setAttribute("disabled", true);
-                }else {
-                    next.removeAttribute("style");
-                    next.removeAttribute("disabled");
-                }
+            if (this.currentPage === this.totals) {
+                next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
+                next.setAttribute("disabled", true);
+            } else {
+                next.removeAttribute("style");
+                next.removeAttribute("disabled");
             }
-        },
-        renderInputJump: function() {
-            var inputJump = `<li class="page-to">跳至<input type="text" class="page_input" />页<span style="visibility: hidden;position: absolute" class="go">GO</span></li>`;
-            return inputJump;
-        },
-        renderPageSize: function() {
-            var pageSize = `<li class="select-pagesize">
-                <select class="select-size">
-                    <option value="8">8条/页</option>
-                    <option value="16">16条/页</option>
-                    <option value="32">32条/页</option>
-                </select>
-            </li>`;
-            return pageSize;
-        },
-        renderPage: function(currentPage) {
-            // 渲染分页
-            var _this = this;
-            var prevHtml = `<li class="prev-page"><a> < </a></li>`;
-            var nextHtml = `<li class="next-page"><a> > </a></li>`;
+        }
 
-            var totals = this.totals,
-                counts = Number(this.options.count),
-                halfPagerCount = Math.floor((counts - 2) / 2),
-                firstPageHtml = "",
-                lastPageHtml = "",
-                showPagesHtml = "",
-                showInputJump = "",
-                showSelectSize = "";
-            if (this.options.inputJumpPage) {
-                showInputJump = this.renderInputJump();
-            }
+        renderInputJump() {
+            return `<li class="page-to">跳至<input type="text" class="page_input" />页<span style="visibility: hidden;position: absolute" class="go">GO</span></li>`;
+        }
 
-            if (this.options.selectPageSize) {
-                showSelectSize = this.renderPageSize();
-            }
+        renderPageSize() {
+            return `<li class="select-pagesize">
+            <select class="select-size">
+                <option value="8">8条/页</option>
+                <option value="16">16条/页</option>
+                <option value="32">32条/页</option>
+            </select>
+        </li>`;
+        }
 
+        renderPage(currentPage) {
+            let prevHtml = `<li class="prev-page"><a> < </a></li>`;
+            let nextHtml = `<li class="next-page"><a> > </a></li>`;
+            let firstPageHtml = `<li><a>1</a></li>`;
+            let lastPageHtml = `<li><a>${this.totals}</a></li>`;
+            let showPagesHtml = "";
 
-            if (totals) {
-                firstPageHtml = `<li><a>1</a></li>`;
+            if (this.totals > 1) {
                 if (currentPage === 1) {
                     firstPageHtml = `<li class="current-page"><a>1</a></li>`;
                 }
-                if (totals > 1) {
-                    lastPageHtml = `<li><a>${totals}</a></li>`;
-                    if (currentPage >= totals) {
-                        this.currentPage = totals;
-                        lastPageHtml = `<li class="current-page"><a>${totals}</a></li>`;
-                    }
+                if (currentPage >= this.totals) {
+                    this.currentPage = this.totals;
+                    lastPageHtml = `<li class="current-page"><a>${this.totals}</a></li>`;
                 }
-                if (totals > counts) {
-                    if (currentPage <= Math.ceil(counts / 2)) {
-                        for (var i = 2;i < counts;i ++) {
-                            if (i === currentPage) {
-                                showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
-                            }else {
-                                showPagesHtml += `<li><a>${i}</a></li>`;
-                            }
-                        }
-                        showPagesHtml += `<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
-                    }else {
-                        if (currentPage > totals - Math.ceil(counts / 2)) {
-                            for (var i = totals - (counts - 2);i < totals;i ++) {
-                                if (i === currentPage) {
-                                    showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
-                                }else {
-                                    showPagesHtml += `<li><a>${i}</a></li>`;
-                                }
-                            }
-                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}${lastPageHtml}`;
-                        }else {
-                            for (var i = currentPage - halfPagerCount;i <= currentPage + halfPagerCount;i ++) {
-                                if (i === currentPage) {
-                                    showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
-                                }else {
-                                    showPagesHtml += `<li><a>${i}</a></li>`;
-                                }
-                            }
-                            showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${counts - 2}页">•••</li>${showPagesHtml}<li class="ellipsis pageJumpNext" title="向后${counts - 2}页">•••</li>${lastPageHtml}`;
-                        }
-                    }
-                }else {
-                    for (var i = 2;i < totals;i ++) {
-                        if (i === currentPage) {
-                            showPagesHtml += `<li class="current-page"><a>${i}</a></li>`;
-                        }else {
-                            showPagesHtml += `<li><a>${i}</a></li>`;
-                        }
-                    }
-                    showPagesHtml += lastPageHtml;
-                }
-
-                var customPaginationHtml = "";
-                if (totals && counts) {
-                    customPaginationHtml = `<ul class="pageWrap">${showSelectSize}${prevHtml}${firstPageHtml}${showPagesHtml}${nextHtml}${showInputJump}</ul>`;
-                    this.el.innerHTML = customPaginationHtml;
-                }
-
-                this.addEvent(this.el.querySelector('.prev-page'),'click',function(e) {
-                    var target = e.target ? e.target: e.srcElement;
-                    var el = target.parentNode;
-                    if (!el.hasAttribute("disabled")) {
-                        _this.prevPage();
-                    }
-                })
-
-                this.addEvent(this.el.querySelector('.next-page'),'click',function(e) {
-                    var target = e.target ? e.target: e.srcElement;
-                    var el = target.parentNode;
-                    if (!el.hasAttribute("disabled")) {
-                        _this.nextPage();
-                    }
-                })
-
-                if (this.el.querySelector('.pageJumpPrev')) {
-                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpPrev'),'prev');
-                    this.addEvent(this.el.querySelector('.pageJumpPrev'),'click',function() {
-                        _this.prevJumpPage();
-                    })
-                }
-                if (this.el.querySelector('.pageJumpNext')) {
-                    this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpNext'),'next');
-                    this.addEvent(this.el.querySelector('.pageJumpNext'),'click',function() {
-                        _this.nextJumpPage();
-                    })
-                }
-                if (this.options.inputJumpPage) {
-                    this.clickInputJump(this.el.querySelector('.go'));
-                }
-                if (this.options.selectPageSize) {
-                    this.el.querySelector('.select-size').value = this.options.pageSize;
-                    this.selectChangeSize(this.el.querySelector('.select-size'));
-                }
-
-
-                this.bindClickPage();
-                this.disablePreNext();
-            }else {
-                var customPaginationHtml = "";
-                customPaginationHtml = `<ul class="pageWrap">${prevHtml}<li><a class="current-page">1</a></li>${nextHtml}</ul>`;
-                this.el.innerHTML = customPaginationHtml;
-                var prev = this.el.querySelector(".prev-page");
-                var next = this.el.querySelector('.next-page');
-
-                prev.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                prev.setAttribute("disabled", true);
-                next.style.cssText = "cursor: not-allowed;color: #666666;color: #dcdcdc;background-color: #fafafa;";
-                next.setAttribute("disabled", true);
             }
-        },
-        addEvent: function(elem, type, fn) {
+
+            if (this.totals > this.options.count) {
+                if (currentPage <= Math.ceil(this.options.count / 2)) {
+                    for (let i = 2; i < this.options.count; i++) {
+                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
+                    }
+                    showPagesHtml += `<li class="ellipsis pageJumpNext" title="向后${this.options.count - 2}页">•••</li>${lastPageHtml}`;
+                } else if (currentPage > this.totals - Math.ceil(this.options.count / 2)) {
+                    for (let i = this.totals - (this.options.count - 2); i < this.totals; i++) {
+                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
+                    }
+                    showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${this.options.count - 2}页">•••</li>${showPagesHtml}${lastPageHtml}`;
+                } else {
+                    for (let i = currentPage - Math.floor((this.options.count - 2) / 2); i <= currentPage + Math.floor((this.options.count - 2) / 2); i++) {
+                        showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
+                    }
+                    showPagesHtml = `<li class="ellipsis pageJumpPrev" title="向前${this.options.count - 2}页">•••</li>${showPagesHtml}<li class="ellipsis pageJumpNext" title="向后${this.options.count - 2}页">•••</li>${lastPageHtml}`;
+                }
+            } else {
+                for (let i = 2; i < this.totals; i++) {
+                    showPagesHtml += `<li${currentPage === i ? ' class="current-page"' : ''}><a>${i}</a></li>`;
+                }
+                showPagesHtml += lastPageHtml;
+            }
+
+            let customPaginationHtml = `<ul class="pageWrap">${this.options.selectPageSize ? this.renderPageSize() : ''}${prevHtml}${firstPageHtml}${showPagesHtml}${nextHtml}${this.options.inputJumpPage ? this.renderInputJump() : ''}</ul>`;
+            this.el.innerHTML = customPaginationHtml;
+
+            this.addEvent(this.el.querySelector('.prev-page'), 'click', () => {
+                if (!this.el.querySelector('.prev-page').hasAttribute("disabled")) {
+                    this.prevPage();
+                }
+            });
+
+            this.addEvent(this.el.querySelector('.next-page'), 'click', () => {
+                if (!this.el.querySelector('.next-page').hasAttribute("disabled")) {
+                    this.nextPage();
+                }
+            });
+
+            if (this.el.querySelector('.pageJumpPrev')) {
+                this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpPrev'), 'prev');
+                this.addEvent(this.el.querySelector('.pageJumpPrev'), 'click', () => {
+                    this.prevJumpPage();
+                });
+            }
+
+            if (this.el.querySelector('.pageJumpNext')) {
+                this.bindJumpPageMoreShow(this.el.querySelector('.pageJumpNext'), 'next');
+                this.addEvent(this.el.querySelector('.pageJumpNext'), 'click', () => {
+                    this.nextJumpPage();
+                });
+            }
+
+            if (this.options.inputJumpPage) {
+                this.clickInputJump(this.el.querySelector('.go'));
+            }
+
+            if (this.options.selectPageSize) {
+                this.el.querySelector('.select-size').value = this.options.pageSize;
+                this.selectChangeSize(this.el.querySelector('.select-size'));
+            }
+
+            this.bindClickPage();
+            this.disablePreNext();
+        }
+
+        addEvent(elem, type, fn) {
             if (elem.attachEvent) {
                 elem.attachEvent("on" + type, fn);
-                return
+            } else if (elem.addEventListener) {
+                elem.addEventListener(type, fn, false);
             }
-            if (elem.addEventListener) {
-                elem.addEventListener(type, fn, false)
-            }
-        },
-        destroy: function() {
-            // 清空容器
-            this.el.innerHtml = "";
+        }
+
+        destroy() {
+            this.el.innerHTML = "";
         }
     }
 
-
     if (typeof module !== "undefined" && module.exports) {
-        module.exports = myPage
+        module.exports = MyPage;
     }
+
     if (typeof define === "function") {
-        define(function() {
-            return myPage
-        })
+        define(() => MyPage);
     }
-    global.MyPage = myPage
+
+    global.MyPage = MyPage
 }(this))
