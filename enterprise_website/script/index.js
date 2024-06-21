@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', function () {
         const scrollTop = window.scrollY;
         const parallaxElement = document.querySelector('.culture-wrap');
-        parallaxElement.style.backgroundPositionY = -scrollTop * 0.5 + 'px';
+        parallaxElement.style.backgroundPositionY = scrollTop * 0.5 + 'px';
     });
 
 
@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         hotNews.forEach(news => {
             const newsElement = document.createElement('div');
-            console.log('news',news)
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">

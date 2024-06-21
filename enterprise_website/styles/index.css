@@ -7,21 +7,21 @@
 .carousel-inner {
     position: relative;
     display: flex;
-    transition: transform 0.5s ease-in-out;
 }
 
 .carousel-item {
     flex: 0 0 100%;
-    transition: opacity 0.5s ease-in-out;
 }
+
+.carousel-item.active {
+    animation: fade-in .5s forwards;
+}
+
 .carousel-item img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-.carousel-item.active {
-    animation: fade-in 1.2s both;
 }
 
 @keyframes fade-in {
@@ -158,7 +158,7 @@ main img {
 .culture-wrap {
     position: relative;
     overflow: hidden;
-    background-image: url('../static/enterprise_culture.jpg');
+    background-image: url('../static/C1.webp');
     background-size: cover;
     background-position: center;
 }
