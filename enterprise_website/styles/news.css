@@ -1,0 +1,24 @@
+.split-line {
+    background-color: #FF350D;
+    width: 128px;
+    height: 6px;
+    margin: 32px 0;
+}
+
+ img {
+    cursor: pointer;
+}
+img:hover,
+img:hover {
+    box-shadow: 0 16px 32px 0 rgba(10, 16, 34, .2), 0 0 0 transparent;
+    transform: translateY(-5px) translateZ(0);
+    transition: transform .2s ease, box-shadow .2s ease, -webkit-transform .2s ease, -webkit-box-shadow .2s ease;
+}
+
+.news-item {
+    cursor: pointer;
+}
+.blur-image {
+    filter: blur(10px); /* 设置毛玻璃效果 */
+    transition: filter 0.3s ease; /* 添加过渡效果，使切换更平滑 */
+}

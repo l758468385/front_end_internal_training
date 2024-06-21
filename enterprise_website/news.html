@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新闻列表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/news.css" />
+    <link rel="stylesheet" href="styles/pagination.css" />
+</head>
+
+<body>
+    <header class="relative w-full">
+        <div class="bg-[#252429] w-full h-[60px] md:h-[120px] flex justify-between items-center text-white">
+            <div class="font-semibold text-xl ml-12 "><a href="index.html">企业官网</a></div>
+            <div class="menuBtn block md:hidden">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <!-- 移动端 -->
+            <nav class="block md:hidden" id="navBox">
+                <div class="links-wrap">
+                    <a class="text-lg" href="index.html">首页</a>
+                    <a class="text-lg" href="news.html">新闻动态页</a>
+                    <a class="text-lg" href="about.html">关于我们</a>
+                </div>
+            </nav>
+            <nav class="mr-[280px] hidden md:block">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="news.html" class="nav-link mx-14 active">新闻动态页</a>
+                <a href="about.html" class="nav-link">关于我们</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="bg-white container m-auto mb-10">
+        <div class="flex flex-col items-center">
+            <h2 class="text-5xl mt-24 text-[#000000]">新闻动态</h2>
+            <div class="split-line"></div>
+            <div class="w-full px-4 grid grid-cols-2 md:grid-cols-4 gap-4  md:gap-8 mb-10" id="newsContainer">
+            </div>
+            <div class="myPage" id="myPage"></div>
+        </div>
+    </main>
+
+    <footer class="bg-[#FF350D] py-12 flex flex-col items-center text-white text-base">
+        <div class="mb-5 flex flex-col md:flex-row">
+            <span class="pr-10 pb-2 md:pb-0">地址：中国山东省青岛市市南区某某中路20号</span>
+            <span class="pr-10 pb-2 md:pb-0">邮箱：1370XXX171@qq.com</span>
+            <span class="pr-10 pb-2 md:pb-0">电话：0591-88888888</span>
+        </div>
+        <div class="flex items-center justify-center p-2">
+            <img class="w-12 h-12 mr-2" src="static/qr_code.jpg" alt="qrcode">
+            <span>Copyright © 2009 - 2022 Cld , All Rights Reserved 某某网络科技有限公司 版权所有 陕ICP备xxxxxxx号</span>
+        </div>
+    </footer>
+
+    <script src="script/utils.js"></script>
+    <script src="script/pagination.js"></script>
+    <script>
+        let pageNum = 1;
+        let pageSize = 8;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlPageNum = urlParams.get('pageNum');
+        const urlPageSize = urlParams.get('pageSize');
+
+        if (urlPageNum) {
+            pageNum = +urlPageNum;
+        }
+        if (urlPageSize) {
+            pageSize = +urlPageSize;
+        }
+
+        function scrollToTop() {
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth' // 平滑滚动
+            });
+        }
+        function setupPagination(totalPages) {
+            new MyPage('#myPage', {
+                total: totalPages,
+                pageSize: pageSize,
+                pageNum: pageNum,
+                count: 7,
+                inputJumpPage: true,
+                selectPageSize: true,
+                changePage: function (Num) {
+                    scrollToTop()
+                    pageNum = Num;
+                    fetchNews(Num, pageSize);
+                    history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
+                },
+                changePageSize: function (size) {
+                    scrollToTop()
+                    pageSize = size;
+                    fetchNews(1, pageSize);
+                    history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
+                }
+            });
+        }
+
+        function fetchNews(pageNum, pageSize) {
+            fetch(`http://127.0.0.1:3000/news?page=${pageNum}&pageSize=${pageSize}`, {
+                method: 'get',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.code === 200) {
+                        renderNews(data.data);
+                        setupPagination(data.total);
+                    } else {
+                        console.error('Failed to fetch news:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
+
+        function renderNews(newsList) {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = ''; // 清空当前内容
+
+            newsList.forEach(news => {
+                console.log('news', news);
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+
+                const newsLink = document.createElement('a');
+                newsLink.href = `news-detail.html?id=${news.id}`;
+
+                const newsImage = document.createElement('img');
+                newsImage.src = 'static/placeholder.png'; // 设置小图的地址为 placeholder.jpg
+                newsImage.className = 'w-full h-[300px] md:h-[506px] hide-ele blur-image relative';
+                newsImage.alt = '新闻封面';
+
+                const newsTitle = document.createElement('h2');
+                newsTitle.className = 'text-xl text-[#000000] leading-9 block mt-9 mb-7 hide-ele';
+                newsTitle.textContent = news.title;
+
+                const newsContent = document.createElement('p'); // 将新闻摘要改为 <p> 元素
+                newsContent.className = 'text-sm text-[#353535] hide-ele';
+                newsContent.textContent = news.summary;
+
+                newsLink.appendChild(newsImage);
+                newsLink.appendChild(newsTitle);
+                newsLink.appendChild(newsContent);
+
+                newsItem.appendChild(newsLink);
+
+                newsContainer.appendChild(newsItem);
+
+                newsLink.addEventListener('click', function (event) {
+                });
+
+                // 加载大图像，并在加载完成后替换小图
+                const largeImage = new Image();
+                largeImage.onload = function () {
+                    newsImage.src = largeImage.src; // 替换为大图的地址
+                    newsImage.classList.remove('blur-image'); // 移除毛玻璃效
+                };
+                largeImage.src = news.cover; // 加载大图
+            });
+        }
+
+
+        // 初次加载第一页新闻数据
+        fetchNews(pageNum, pageSize);
+    </script>
+
+</body>
+
+</html>

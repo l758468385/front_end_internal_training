@@ -1,0 +1,87 @@
+ul.pageWrap{
+    list-style: none;
+    box-sizing: border-box;
+    color: rgba(139, 139, 139, 1);
+}
+ul.pageWrap li{
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 24px;
+    height: 32px;
+    margin-right: 8px;
+    font-family: Arial;
+    line-height: 32px;
+    text-align: center;
+    vertical-align: middle;
+    list-style: none;
+    background-color: #fff;
+    /*border: 1px solid #d9d9d9;*/
+    /*border-radius: 2px;*/
+    outline: 0;
+    cursor: pointer;
+    user-select: none;
+}
+ul.pageWrap li:not(.prev-page):not(.next-page):not(.current-page):not(.page-to):not(.select-pagesize):hover {
+    color: rgba(255, 53, 13, 1);
+}
+ul.pageWrap li.page-to,ul.pageWrap li.select-pagesize{
+    border: none;
+}
+ul.pageWrap li.page-to .page_input{
+    display: inline-block;
+    width: 35px;
+    height: 25px;
+    line-height: 28px;
+    background-color: transparent;
+    border: 0;
+    border: 1px solid #f0f0f0;
+    vertical-align: middle;
+    margin: 0 10px;
+    text-align: center;
+}
+ul.pageWrap li.page-to span{
+    vertical-align: middle;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    line-height: 28px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    margin-left: 10px
+}
+ul.pageWrap li.select-pagesize .select-size{
+    height: 30px;
+    width: 80px;
+    border: 1px solid #f0f0f0;
+}
+
+ul.pageWrap li.page-to span:hover{
+    background-color: rgba(255, 53, 13, 1);
+    color: #fff
+}
+
+@media screen and (max-width: 580px) {
+    /* 示例：调整标题字体大小 */
+
+    ul.pageWrap li {
+        margin-right: 6px;
+        min-width: 18px;
+    }
+    ul.pageWrap li.select-pagesize .select-size {
+        width: 70px;
+        font-size: 14px;
+    }
+    ul.pageWrap li.page-to {
+        font-size: 13px;
+    }
+}
+.ellipsis{
+    letter-spacing: 2px;
+    text-indent: 2px;
+}
+ul.pageWrap li.current-page{
+    color: rgba(255, 53, 13, 1);
+    /*border: 1px solid rgba(255, 53, 13, 1);*/
+    /*background: rgba(255, 53, 13, 1);*/
+}
