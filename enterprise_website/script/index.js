@@ -7,10 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const element = entry.target;
-                    if (element.tagName === 'H2' || element.tagName === 'SPAN' || element.tagName === 'H3' || (element.tagName === 'DIV' && element.querySelector('span'))) {
-                        element.classList.add('animate-slideInLeft');
-                    } else if (element.tagName === 'IMG') {
-                        element.classList.add('animate-fadeIn');
+                    if(element.dataset.aname) {
+                        element.classList.add(element.dataset.aname)
                     }
                     element.classList.remove('hide-ele');
                     element.dataset.animated = "true";
@@ -124,9 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">
-                <img data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] hide-ele lazy hot-news-img"  alt="">
-                <h2 class="text-xl leading-9 block mt-9 mb-7 hide-ele" style="color: #fafafa">${news.title}</h2>
-                <h2 class="text-sm hide-ele">${news.summary}</h2>
+                <img data-aName = 'animate-fadeIn' data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] hide-ele lazy hot-news-img"  alt="">
+                <h2 data-aName = 'animate-fadeIn' class="text-xl leading-9 block mt-9 mb-7 hide-ele" style="color: #fafafa">${news.title}</h2>
+                <h2 data-aName = 'animate-fadeIn' class="text-sm hide-ele">${news.summary}</h2>
             </a>
         `;
             hotNewsContainer.appendChild(newsElement);

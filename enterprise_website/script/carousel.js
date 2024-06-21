@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <picture  class="lazy">
                 <source media="(max-width: 600px)" data-srcset="${slide.small}">
                 <source media="(min-width: 601px)" data-srcset="${slide.medium}">
-                <img data-src="${slide.large}" alt="${slide.alt}">
+                <img  data-src="${slide.large}" alt="${slide.alt}">
             </picture>
         `;
         carouselInner.appendChild(slideElement);
