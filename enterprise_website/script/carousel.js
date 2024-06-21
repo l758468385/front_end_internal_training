@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         slideElement.innerHTML = `
             <picture  class="lazy">
-                <source media="(max-width: 600px)" data-srcset="${slide.small}">
-                <source media="(min-width: 601px)" data-srcset="${slide.medium}">
-                <img  data-src="${slide.large}" alt="${slide.alt}">
+                <source src="static/placeholder.png" media="(max-width: 600px)" data-srcset="${slide.small}">
+                <source src="static/placeholder.png" media="(min-width: 601px)" data-srcset="${slide.medium}">
+                <img  src="static/placeholder.png" data-src="${slide.large}" alt="${slide.alt}">
             </picture>
         `;
         carouselInner.appendChild(slideElement);
