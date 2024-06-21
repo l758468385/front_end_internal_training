@@ -158,7 +158,7 @@ main img {
 .culture-wrap {
     position: relative;
     overflow: hidden;
-    background-image: url('../static/C1.webp');
+    background-image: url('../static/enterprise_culture.jpg');
     background-size: cover;
     background-position: center;
 }

@@ -88,7 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function fetchHotNews() {
-        fetch('http://127.0.0.1:3000/hot-news', {
+        // fetch('http://127.0.0.1:3000/hot-news', {
+        fetch('http://47.237.104.19:3000/hot-news', {
             method: 'get',
             mode: 'cors',
         })

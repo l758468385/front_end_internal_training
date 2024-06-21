@@ -108,7 +108,8 @@
         }
 
         function fetchNews(pageNum, pageSize) {
-            fetch(`http://127.0.0.1:3000/news?page=${pageNum}&pageSize=${pageSize}`, {
+            // fetch(`http://127.0.0.1:3000/news?page=${pageNum}&pageSize=${pageSize}`, {
+            fetch(`http://47.237.104.19:3000/news?page=${pageNum}&pageSize=${pageSize}`, {
                 method: 'get',
                 mode: 'cors',
             })

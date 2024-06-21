@@ -122,22 +122,20 @@ app.get('/news', (req, res) => {
         cover: item.cover,
         summary: item.summary,
         content: item.content,
-        id:item.id
+        id: item.id
     }));
 
     res.json({
         code: 200,
         data,
         links: {
-            self: `/news?page=${page}&pageSize=${pageSize}`,
-            next: page * pageSize < total ? `/news?page=${page + 1}&pageSize=${pageSize}` : null,
-            prev: page > 1 ? `/news?page=${page - 1}&pageSize=${pageSize}` : null
-        },
-        total,
-        current: page,
-        pageSize
+            total,
+            current: page,
+            pageSize,
+        }
     });
 });
+
 
 // 获取新闻详情，返回标题、封面和内容
 app.get('/news/:id', (req, res) => {
