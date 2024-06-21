@@ -13,21 +13,22 @@
     background-color: #FF350D;
 }
 .mobile-nav-box {
+    /*position: absolute;*/
+    /*z-index: -1;*/
+    /*transform: translateX(1800px);*/
+    /*transition-property: transform; !* 过渡属性为 transform *!*/
+    /*transition-duration: 500ms; !* 过渡持续时间为 500 毫秒 *!*/
+    /*transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1); !* 过渡缓动函数 *!*/
+    /*-webkit-transition-property: transform;*/
+    /*-webkit-transition-duration: 500ms;*/
+    /*-webkit-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);*/
     position: absolute;
-    z-index: -1;
-    transform: translateX(1800px);
-
-    transition-property: transform; /* 过渡属性为 transform */
-    transition-duration: 500ms; /* 过渡持续时间为 500 毫秒 */
-    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1); /* 过渡缓动函数 */
-    -webkit-transition-property: transform;
-    -webkit-transition-duration: 500ms;
-    -webkit-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    display: none;
 }
 
 .mobile-nav-box.active {
+   display: block;
     position: static;
-    transform: translateX(0px);
 }
 .links {
     display: flex;
