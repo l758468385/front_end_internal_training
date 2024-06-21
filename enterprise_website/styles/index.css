@@ -3,7 +3,9 @@
     overflow: hidden;
     width: 100%;
 }
-
+img {
+    object-fit: cover;
+}
 .carousel-inner {
     position: relative;
     display: flex;
