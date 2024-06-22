@@ -29,7 +29,7 @@ const news = [
 
     {
         id: 3,
-        title: "主播卖货的一个核心杀手锏!京东开始思考李佳琦京东开始思考李佳琦？",
+        title: "主播卖货的一个核心杀手锏!京东开始思考李佳琦？",
         time:'2024年06月21日 08:07',
         source:'人民网',
         cover: "https://img1.baidu.com/it/u=4285767737,4156767263&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1589",
@@ -122,22 +122,20 @@ app.get('/news', (req, res) => {
         cover: item.cover,
         summary: item.summary,
         content: item.content,
-        id:item.id
+        id: item.id
     }));
 
     res.json({
         code: 200,
         data,
         links: {
-            self: `/news?page=${page}&pageSize=${pageSize}`,
-            next: page * pageSize < total ? `/news?page=${page + 1}&pageSize=${pageSize}` : null,
-            prev: page > 1 ? `/news?page=${page - 1}&pageSize=${pageSize}` : null
-        },
-        total,
-        current: page,
-        pageSize
+            total,
+            current: page,
+            pageSize,
+        }
     });
 });
+
 
 // 获取新闻详情，返回标题、封面和内容
 app.get('/news/:id', (req, res) => {

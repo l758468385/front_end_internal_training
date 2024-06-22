@@ -18,14 +18,14 @@
             class="bg-transparent w-full h-[60px] md:h-[120px] flex justify-between items-center text-white absolute top-0 z-10">
             <div class="font-semibold text-xl ml-12 "><a href="index.html">企业官网</a></div>
 
-            <div class="menuBtn   block md:hidden">
+            <div class="menuBtn  block md:hidden">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
             <!-- 移动端 -->
-            <nav class="block md:hidden " id="navBox">
+            <nav class="mobile-nav-box block md:hidden" id="navBox">
                 <div class="links-wrap">
                     <a class="text-lg" href="index.html">首页</a>
                     <a class="text-lg" href="news.html">新闻动态页</a>
@@ -52,27 +52,36 @@
         <div class=" service-wrap container m-auto  p-6 mb-5">
             <div class="md:flex md:justify-between ">
                 <div class="w-full xl:w-2/5 ">
-                    <h2 class="text-3xl md:text-5xl pb-4 hide-ele">服务范围</h2>
+                    <div class="relative hide-ele mt-6 ml-4 md-0" data-aname="animate-slideInLeft">
+                        <h2 class="text-3xl md:text-5xl pb-4 ">服务范围</h2>
+                        <span class="text-4xl md:text-6xl" style=" position: absolute;
+                        top: 0;
+                        left: -30px;
+                         -webkit-text-stroke: 1px rgba(217, 217, 217, 1);
+                         color: rgba(246, 246, 246, 1);
+                         transform: translateY(-65%);
+                         z-index: -1;">Service scope</span>
+                    </div>
                     <div class=" mt-4 text-[#8B8B8B] text-xl leading-10	">
-                        <div class="hide-ele">
+                        <div class="hide-ele" data-aname="animate-fadeIn">
                             <span>依托百度政务混合云，汇聚城市管理及公安等政务领域的自有数据及互联网公开数据，基于百度大数据多年积累的行业模型及实战经验，提供从数据整合治理到分析挖掘的一站式大数据解决方案，助力智慧政务新时代。</span>
                         </div>
-                        <div class=" mt-4 hide-ele">
+                        <div class=" mt-4 hide-ele" data-aname="animate-fadeIn">
                             <span>全渠道零售方案包括B2C、O2O、B2B的场景，提供APP/小程序，支持对接饿了么、美团等第三方外卖平台，基于阿里巴巴多年沉淀的业务中台技术，建立商品、会员、交易、营销等共享服务中心，实现全渠道数据的共享和一致，帮助零售商打造线上、线下无差别的全渠道销售能力。</span>
                         </div>
                     </div>
                 </div>
                 <div class="mt-4 ml-2 flex items-end justify-end">
-                    <img data-src="static/service1.jpg"
+                    <img data-src="static/service1.jpg" data-aname="animate-fadeIn"
                         class="w-[120px] h-[120px] md:w-[156px] md:[156px] xl:w-[256px] xl:h-[256px] mr-4 hide-ele lazy">
-                    <img data-src="static/service2.jpg"
+                    <img data-src="static/service2.jpg" data-aname="animate-fadeIn"
                         class="w-[210px] h-[175px] md:w-[520px] md:[450px] xl:w-[600px] xl:h-[500px] hide-ele lazy">
                 </div>
             </div>
             <div class="mt-4 flex justify-end">
-                <img data-src="static/service3.jpg"
+                <img data-src="static/service3.jpg" data-aname="animate-fadeIn"
                     class="mr-4  w-[175px] h-[185px] md:w-[450px] md:h-[338px] xl:w-[654px] xl:h-[484px] hide-ele lazy">
-                <img data-src="static/service4.jpg"
+                <img data-src="static/service4.jpg" data-aname="animate-fadeIn"
                     class=" w-[150px] h-[100px] md:w-[260px] md:h-[200px] xl:w-[460px] xl:h-[300px] hide-ele lazy">
             </div>
         </div>
@@ -88,51 +97,75 @@
             </div>
         </div>
 
-        <div class="flex flex-col items-center team-wrap" style="overflow: hidden">
-
-            <h2 class="text-5xl mt-32">团队介绍</h2>
+        <div class="flex flex-col mt-10 items-center team-wrap" >
+            <div class=" title-wrap hide-ele text-center" data-aname='animate-slideInRight'>
+                <span class="text-center text-4xl md:text-6xl" >Team to introduce</span>
+                <h2 class="text-5xl">
+                    团队介绍
+                </h2>
+            </div>
             <div class="split-line "></div>
             <div class="flex flex-wrap w-full">
 
                 <div class="w-full md:flex-1 h-[700px] md:h-[900px] relative">
 
-                    <img data-src="static/team1.jpg" class="w-full h-full team-back-img hide-ele lazy">
+                    <img data-src="static/team1.jpg" class="w-full h-full team-back-img hide-ele lazy"
+                        style="object-fit: cover">
                     <div class="team-content">
-                        <h2 class="text-4xl hide-ele">Jon Smith</h2>
-                        <h2 class="text-xl block pt-6 pb-12 hide-ele">特技教师，从事教育工作10年</h2>
-                        <h2 class="more-info text-xl hide-ele cursor-pointer">
-                            More information
-                        </h2>
+                        <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Jon Smith</h2>
+                        <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
+                        <div class="flex items-center justify-center cursor-pointer">
+                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
+                                More information
+                            </h2>
+                        </div>
+                       
                     </div>
 
                 </div>
                 <div class="w-full md:flex-1  h-[700px] md:h-[900px] relative">
-                    <img data-src="static/team2.jpg" class="w-full h-full team-back-img hide-ele lazy" alt="">
+                    <img data-src="static/team2.jpg" style="object-fit: cover" data-aname='animate-fadeIn'
+                        class="w-full h-full team-back-img hide-ele lazy" alt="">
                     <div class="team-content">
-                        <h2 class="text-4xl hide-ele">Merri Bond</h2>
-                        <h2 class="text-xl block pt-6 pb-12 hide-ele">特技教师，从事教育工作10年</h2>
-                        <h2 class="more-info text-xl hide-ele cursor-pointer">
-                            More information
-                        </h2>
+                        <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Merri Bond</h2>
+                        <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
+                        <div class="flex items-center justify-center cursor-pointer">
+                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
+                                More information
+                            </h2>
+                        </div>
                     </div>
                 </div>
                 <div class="w-full md:flex-1   h-[700px] md:h-[900px] relative">
-                    <img data-src="static/team3.jpg" class="w-full h-full team-back-img hide-ele lazy" alt="">
+                    <img data-src="static/team3.jpg" style="object-fit: cover"
+                        class="w-full h-full team-back-img hide-ele lazy" data-aname='animate-fadeIn' alt="">
                     <div class="team-content">
-                        <h2 class="text-4xl hide-ele">Samuel Fredman</h2>
-                        <h2 class="text-xl block pt-6 pb-12 hide-ele">特技教师，从事教育工作10年</h2>
-                        <h2 class="more-info text-xl hide-ele cursor-pointer ">
-                            More information
-                        </h2>
+                        <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Samuel Fredman</h2>
+                        <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
+                        <div class="flex items-center justify-center cursor-pointer">
+                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
+                                More information
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="flex  flex-col items-center news-wrap">
-            <h2 class="text-5xl mt-32 text-white">新闻动态</h2>
+
+            <div class=" title-wrap mt-10 hide-ele text-center" data-aname='animate-slideInRight'>
+                <span class="text-center text-4xl md:text-6xl" >Team to introduce</span>
+                <h2 class="text-5xl  text-white hide-ele" data-aname='animate-slideInRight'>新闻动态</h2>
+               
+            </div>
+
             <div class="split-line "></div>
-            <div class="w-full  container px-4 md:px-0 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-white mb-10" id="hot-news-container"></div>
+            <div class="w-full  container px-4 md:px-0 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-white mb-10"
+                id="hot-news-container"></div>
         </div>
 
     </main>
