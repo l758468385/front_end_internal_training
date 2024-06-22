@@ -23,3 +23,16 @@ img:hover {
     filter: blur(10px); /* 设置毛玻璃效果 */
     transition: filter 0.3s ease; /* 添加过渡效果，使切换更平滑 */
 }
+
+
+.title-wrap {
+    position: relative;
+}
+.title-wrap span {
+     /* 描边宽度为1px，描边颜色为黑色 */
+     -webkit-text-stroke: 1px rgba(217, 217, 217, 1);
+     color: rgba(255, 255, 255, 1);
+     position: relative;
+     z-index: -1;
+     display: block;
+}

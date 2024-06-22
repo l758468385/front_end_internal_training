@@ -29,7 +29,7 @@ const news = [
 
     {
         id: 3,
-        title: "主播卖货的一个核心杀手锏!京东开始思考李佳琦京东开始思考李佳琦？",
+        title: "主播卖货的一个核心杀手锏!京东开始思考李佳琦？",
         time:'2024年06月21日 08:07',
         source:'人民网',
         cover: "https://img1.baidu.com/it/u=4285767737,4156767263&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1589",

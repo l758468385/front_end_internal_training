@@ -36,3 +36,15 @@
 .news-header .news-info .time {
     padding-right: 20px;
 }
+
+.title-wrap {
+    position: relative;
+}
+.title-wrap span {
+     /* 描边宽度为1px，描边颜色为黑色 */
+     -webkit-text-stroke: 1px rgba(217, 217, 217, 1);
+     color: rgba(255, 255, 255, 1);
+     position: relative;
+     z-index: -1;
+     display: block;
+}

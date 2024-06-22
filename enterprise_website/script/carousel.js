@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const carousel = document.getElementById("carousel");
     const carouselInner = carousel.querySelector(".carousel-inner");
     const indicatorsContainer = carousel.querySelector(".indicators");
@@ -9,21 +9,27 @@ document.addEventListener("DOMContentLoaded", function() {
             alt: "Slide 1",
             small: "static/slide1-small.jpg",
             medium: "static/slide1-medium.jpg",
-            large: "static/slide1-large.jpg"
+            large: "static/slide1-large.jpg",
+            title: "开启互联网+ 从我们开始",
+            description: "域名主机，网站建设，云服务器，企业邮箱一站式解决"
         },
         {
             src: "static/slide2.jpg",
             alt: "Slide 2",
             small: "static/slide2-small.jpg",
             medium: "static/slide2-medium.jpg",
-            large: "static/slide2-large.jpg"
+            large: "static/slide2-large.jpg",
+            title: "关于我们",
+            description: "企业构建互联网信息技术服务平台，领先技术变革，提升产业效率，致力于使能软件企业引领发展，服务制造企业转型升级，为政企客户提供“多快好省”的信息技术服务。"
         },
         {
             src: "static/slide3.jpg",
             alt: "Slide 3",
             small: "static/slide3-small.jpg",
             medium: "static/slide3-medium.jpg",
-            large: "static/slide3-large.jpg"
+            large: "static/slide3-large.jpg",
+            title: "新闻中心",
+            description: "几乎所有的伟大成就，都是团队集体协作追求远大目标的结果。这些团队的领导者挑选了团队的成员，并激励他们追求自己不敢想象的成就。"
         },
     ];
 
@@ -45,6 +51,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 <source src="static/placeholder.png" media="(min-width: 601px)" data-srcset="${slide.medium}">
                 <img  src="static/placeholder.png" data-src="${slide.large}" alt="${slide.alt}">
             </picture>
+            <div class="carousel-caption">
+                <h3 >${slide.title}</h3>
+                <p >${slide.description}</p>
+            </div>
         `;
         carouselInner.appendChild(slideElement);
 
