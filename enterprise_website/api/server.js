@@ -121,7 +121,7 @@ app.get('/news', (req, res) => {
         title: item.title,
         cover: item.cover,
         summary: item.summary,
-        content: item.content,
+        // content: item.content,
         id: item.id
     }));
 
