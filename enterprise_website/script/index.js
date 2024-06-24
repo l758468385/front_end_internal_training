@@ -21,15 +21,15 @@ function addAnimation() {
     }
 
 
-    window.addEventListener('scroll', function () {
-        const scrollTop = window.scrollY;
-        const parallaxElement = document.querySelector('.culture-wrap');
-        if (parallaxElement) {
-            requestAnimationFrame(() => {
-                parallaxElement.style.backgroundPositionY = -(scrollTop * 0.5) + 'px';
-            });
-        }
-    });
+    // window.addEventListener('scroll', function () {
+    //     const scrollTop = window.scrollY;
+    //     const parallaxElement = document.querySelector('.culture-wrap');
+    //     if (parallaxElement) {
+    //         requestAnimationFrame(() => {
+    //             parallaxElement.style.backgroundPositionY = -(scrollTop * 0.5) + 'px';
+    //         });
+    //     }
+    // });
 
 
     function lazyLoadImg() {
