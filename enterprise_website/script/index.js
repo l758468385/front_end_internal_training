@@ -115,7 +115,6 @@ function addAnimation() {
     }
 
     function renderHotNews(hotNews) {
-        console.log('hotNews:', hotNews);  // 确认 hotNews 数据
         const hotNewsContainer = document.getElementById('hot-news-container');
         if (!hotNewsContainer) {
             console.error('No element with id "hot-news-container" found.');
