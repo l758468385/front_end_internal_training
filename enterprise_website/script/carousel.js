@@ -5,29 +5,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const slidesData = [
         {
-            src: "static/slide1.jpg",
+            src: "static/slide1.webp",
             alt: "Slide 1",
-            small: "static/slide1-small.jpg",
-            medium: "static/slide1-medium.jpg",
-            large: "static/slide1-large.jpg",
+            small: "static/slide1-small.webp",
+            medium: "static/slide1-medium.webp",
+            large: "static/slide1-large.webp",
             title: "开启互联网+ 从我们开始",
             description: "域名主机，网站建设，云服务器，企业邮箱一站式解决"
         },
         {
-            src: "static/slide2.jpg",
+            src: "static/slide2.webp",
             alt: "Slide 2",
-            small: "static/slide2-small.jpg",
-            medium: "static/slide2-medium.jpg",
-            large: "static/slide2-large.jpg",
+            small: "static/slide2-small.webp",
+            medium: "static/slide2-medium.webp",
+            large: "static/slide2-large.webp",
             title: "关于我们",
             description: "企业构建互联网信息技术服务平台，领先技术变革，提升产业效率，致力于使能软件企业引领发展，服务制造企业转型升级，为政企客户提供“多快好省”的信息技术服务。"
         },
         {
-            src: "static/slide3.jpg",
+            src: "static/slide3.webp",
             alt: "Slide 3",
-            small: "static/slide3-small.jpg",
-            medium: "static/slide3-medium.jpg",
-            large: "static/slide3-large.jpg",
+            small: "static/slide3-small.webp",
+            medium: "static/slide3-medium.webp",
+            large: "static/slide3-large.webp",
             title: "新闻中心",
             description: "几乎所有的伟大成就，都是团队集体协作追求远大目标的结果。这些团队的领导者挑选了团队的成员，并激励他们追求自己不敢想象的成就。"
         },

@@ -141,7 +141,6 @@
             newsContainer.innerHTML = ''; // 清空当前内容
 
             newsList.forEach(news => {
-                console.log('news', news);
                 const newsItem = document.createElement('div');
                 newsItem.className = 'news-item';
 
@@ -150,7 +149,7 @@
 
                 const newsImage = document.createElement('img');
                 newsImage.src = 'static/placeholder.png'; // 设置小图的地址为 placeholder.jpg
-                newsImage.className = 'w-full h-[300px] md:h-[506px] hide-ele blur-image relative';
+                newsImage.className = 'w-full hide-ele blur-image relative';
                 newsImage.alt = '新闻封面';
 
                 const newsTitle = document.createElement('h2');

@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                console.log('Response data:', data);  // 查看响应数据
                 if (data.code === 200) {
                     renderHotNews(data.data);
                 } else {
@@ -126,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">
-                <img style="object-fit: cover" data-aName = 'animate-fadeIn' data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] hide-ele lazy hot-news-img"  alt="">
+                <img style="object-fit: cover" data-aName = 'animate-fadeIn' data-src="${news.cover}" class="w-full  hide-ele lazy hot-news-img"  alt="">
                 <h2 data-aName = 'animate-fadeIn' class="text-xl leading-9 block mt-9 mb-7 hide-ele" style="color: #fafafa">${news.title}</h2>
                 <h2 data-aName = 'animate-fadeIn' class="text-sm hide-ele">${news.summary}</h2>
             </a>

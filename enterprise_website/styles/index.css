@@ -213,6 +213,8 @@ main img {
 
 .team-wrap img {
     transition: transform 0.5s;
+    box-sizing: border-box;
+    z-index: 2;
 }
 
 .team-wrap img:hover {
