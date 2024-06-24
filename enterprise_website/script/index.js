@@ -33,7 +33,7 @@ function addAnimation() {
 
 
     function lazyLoadImg() {
-        let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy"));
+        let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy,.lazy-bg"));
 
         function loadImage(lazyElement) {
             if (lazyElement.tagName.toLowerCase() === 'picture') {
@@ -45,6 +45,9 @@ function addAnimation() {
                 img.src = img.dataset.src;
             } else if (lazyElement.tagName.toLowerCase() === 'img') {
                 lazyElement.src = lazyElement.dataset.src;
+            }else if (lazyElement.dataset.bg) {
+                // 处理背景图片懒加载
+                lazyElement.style.backgroundImage = `url(${lazyElement.dataset.bg})`;
             }
             lazyElement.classList.remove("lazy");
         }
