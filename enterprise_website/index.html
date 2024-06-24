@@ -6,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>企业官网</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles/index.css" />
     <link rel="stylesheet" href="styles/header.css" />
+    <script src="https://cdn.tailwindcss.com/3.4.4"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -45,7 +45,7 @@
             <div class="carousel-inner relative w-full h-full"></div>
             <div class="indicators"></div>
         </div>
-
+        <script async src="script/carousel.js"></script>
     </header>
     <!-- Main content -->
     <main>
@@ -114,7 +114,7 @@
                         <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Jon Smith</h2>
                         <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
                         <div class="flex items-center justify-center cursor-pointer">
-                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <img style="width: 24px;" class="mr-4 hide-ele lazy" data-src="static/right.png" alt="more-info" >
                             <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
                                 More information
                             </h2>
@@ -130,7 +130,7 @@
                         <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Merri Bond</h2>
                         <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
                         <div class="flex items-center justify-center cursor-pointer">
-                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <img style="width: 24px;"  class="mr-4 hide-ele lazy" data-src="static/right.png" alt="more-info" >
                             <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
                                 More information
                             </h2>
@@ -144,7 +144,7 @@
                         <h2 class="text-4xl hide-ele" data-aname='animate-fadeIn'>Samuel Fredman</h2>
                         <h2 class="text-xl block pt-6 pb-12 hide-ele" data-aname='animate-fadeIn'>特技教师，从事教育工作10年</h2>
                         <div class="flex items-center justify-center cursor-pointer">
-                            <img style="width: 24px;" class="mr-4" src="static/right.png" alt="more-info" >
+                            <img style="width: 24px;" class="mr-4 hide-ele lazy" data-src="static/right.png" alt="more-info" >
                             <h2 class="more-info text-xl hide-ele " data-aname='animate-fadeIn'>
                                 More information
                             </h2>
@@ -179,9 +179,8 @@
         </div>
     </footer>
 
-    <script src="script/carousel.js"></script>
-    <script src="script/index.js"></script>
-    <script src="script/utils.js"></script>
+    <script async src="script/index.js"></script>
+    <script async src="script/utils.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-    function addAnimation() {
+function addAnimation() {
         const elements = document.querySelectorAll('.hide-ele');
 
         const observer = new IntersectionObserver((entries, observer) => {
@@ -141,4 +139,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-});
