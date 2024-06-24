@@ -26,7 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', function () {
         const scrollTop = window.scrollY;
         const parallaxElement = document.querySelector('.culture-wrap');
-        parallaxElement.style.backgroundPositionY = scrollTop * 0.5 + 'px';
+        if (parallaxElement) {
+            requestAnimationFrame(() => {
+                parallaxElement.style.backgroundPositionY = -(scrollTop * 0.5) + 'px';
+            });
+        }
     });
 
 

@@ -181,6 +181,22 @@ document.addEventListener("DOMContentLoaded", function () {
         startCarousel();
     });
 
+    function debounce(func, wait) {
+        let timeout;
+        return function () {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+
+    // 监听窗口尺寸变化事件
+    window.addEventListener("resize", debounce(() => {
+        // 重新计算幻灯片容器的位置
+        const slideWidth = slides[0].clientWidth;
+        carouselInner.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }, 200)); //
+
     // 初始显示第一张幻灯片并启动自动播放
     showSlide(currentIndex); // 显示第一张幻灯片
     resetProgressAnimation(); // 启动倒计时动画
