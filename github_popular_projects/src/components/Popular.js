@@ -115,14 +115,19 @@ function useFetch(selectedLanguage) {
 
 function Popular() {
 
-    const localLanguage = localStorage.getItem('localLanguage');
-    const language = localLanguage || 'All'
+    const getLanguageFromUrl = () => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('language') || 'All';
+    };
 
+    const localLanguage = getLanguageFromUrl()
+    const language = localLanguage || 'All'
 
     const [selectedLanguage, setSelectedLanguage] = useState(language);
     const {repos, loading, error, loadingMore} = useFetch(selectedLanguage);
+
     const updateLanguage = (lg) => {
-        localStorage.setItem('localLanguage', lg);
+        history.pushState(null, null, '?language=' + lg );
         setSelectedLanguage(lg)
     }
     return (

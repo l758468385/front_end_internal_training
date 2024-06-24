@@ -19,7 +19,7 @@ function ReposGrid({repos}) {
                         >
                             <ul className='card-list'>
                                 <li>
-                                    <Tooltip text='Github username'>
+                                    <Tooltip text={name}>
                                         <span className="fa-fw fa-solid fa-user font-icon"
                                               style={{color: '#f7c578'}}></span>
                                         <a href={`https://github.com/${login}`}>
