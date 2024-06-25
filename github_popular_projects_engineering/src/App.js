@@ -6,7 +6,7 @@ import Loading from './components/Loading';
 const Popular = lazy(() => import('@/components/Popular'));
 const Battle = lazy(() => import('@/components/Battle'));
 const Results = lazy(() => import('@/components/Result'))
-export default function App() {
+export default function  App() {
     return (
         <BrowserRouter >
                 <div className='container'>
