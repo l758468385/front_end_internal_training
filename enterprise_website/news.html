@@ -105,6 +105,7 @@
                 changePageSize: function (size) {
                     scrollToTop()
                     pageSize = size;
+                    pageNum = 1
                     fetchNews(1, pageSize);
                     history.pushState(null, null, '?pageNum=' + pageNum + '&pageSize=' + pageSize);
                 }
