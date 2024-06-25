@@ -72,7 +72,7 @@ function useFetch(selectedLanguage) {
             });
     }, [selectedLanguage]);
 
-    useEffect(() => {
+   /* useEffect(() => {
         const handleScroll = debounce(() => {
             if (onBottom() && !loadingMore) {
                 loadMore();
@@ -82,30 +82,61 @@ function useFetch(selectedLanguage) {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [state, selectedLanguage, loadingMore]);
+    }, [state, selectedLanguage, loadingMore]);*/
 
     const loadMore = () => {
         setLoadingMore(true);
 
         const nextPage = (state[selectedLanguage] && state[selectedLanguage].page || 1) + 1;
         fetchPopularRepos(selectedLanguage, nextPage)
-            .then((data) =>
+            .then((data) => {
                 dispatch({type: 'success',selectedLanguage, repos: data, page: nextPage, error: null, })
-            )
+                setLoadingMore(false);
+            })
             .catch((error) => {
                 console.warn('Error fetching repos:', error);
+                window.scrollBy(0, -50)
+
                 dispatch({type: 'error'});
+                setTimeout(() => {
+                    setLoadingMore(false);
+                })
             })
-            .finally(() => {
-                setLoadingMore(false);
-            });
     };
+
+    const sentinelRef = useRef(null);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !loadingMore) {
+                    loadMore()
+                }
+            },
+            {
+                threshold: 1.0,
+            }
+        );
+
+        const currentSentinel = sentinelRef.current;
+        if (currentSentinel) {
+            observer.observe(currentSentinel);
+        }
+
+        return () => {
+            if (currentSentinel) {
+                observer.unobserve(currentSentinel);
+            }
+        };
+    }, [state, selectedLanguage, loadingMore]);
+
+
+
 
     return {
         repos: state[selectedLanguage] && state[selectedLanguage].repos || [],
         loading: state.loading,
         error: state.error,
-        loadingMore
+        loadingMore,sentinelRef
     };
 }
 
@@ -120,7 +151,7 @@ function Popular() {
     const language = localLanguage || 'All';
 
     const [selectedLanguage, setSelectedLanguage] = useState(language);
-    const {repos, loading, error, loadingMore} = useFetch(selectedLanguage);
+    const {repos, loading, error, loadingMore,sentinelRef } = useFetch(selectedLanguage);
 
     const updateLanguage = (lg) => {
         history.pushState(null, null, '?language=' + lg);
@@ -137,13 +168,14 @@ function Popular() {
             {repos.length > 0 && <ReposGrid repos={repos}/>}
 
             {(loadingMore || loading) && <Loading text='努力加载中...'/>}
-
             {error && <p className='center-text error'>{error}</p>}
-
+            {repos.length > 0 && <div ref={sentinelRef} style={{ height: '4px' }}></div>}  {/* 加载更多的触发器 */}
         </Fragment>
     );
 }
 
+
+// 原判定滚动底部逻辑
 function onBottom() {
     const windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
