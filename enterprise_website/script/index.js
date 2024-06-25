@@ -1,6 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-    function addAnimation() {
+function addAnimation() {
         const elements = document.querySelectorAll('.hide-ele');
 
         const observer = new IntersectionObserver((entries, observer) => {
@@ -23,15 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    window.addEventListener('scroll', function () {
-        const scrollTop = window.scrollY;
-        const parallaxElement = document.querySelector('.culture-wrap');
-        parallaxElement.style.backgroundPositionY = scrollTop * 0.5 + 'px';
-    });
+    // window.addEventListener('scroll', function () {
+    //     const scrollTop = window.scrollY;
+    //     const parallaxElement = document.querySelector('.culture-wrap');
+    //     if (parallaxElement) {
+    //         requestAnimationFrame(() => {
+    //             parallaxElement.style.backgroundPositionY = -(scrollTop * 0.5) + 'px';
+    //         });
+    //     }
+    // });
 
 
     function lazyLoadImg() {
-        let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy"));
+        let lazyImages = [].slice.call(document.querySelectorAll("picture.lazy, img.lazy,.lazy-bg"));
 
         function loadImage(lazyElement) {
             if (lazyElement.tagName.toLowerCase() === 'picture') {
@@ -43,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 img.src = img.dataset.src;
             } else if (lazyElement.tagName.toLowerCase() === 'img') {
                 lazyElement.src = lazyElement.dataset.src;
+            }else if (lazyElement.dataset.bg) {
+                // 处理背景图片懒加载
+                lazyElement.style.backgroundImage = `url(${lazyElement.dataset.bg})`;
             }
             lazyElement.classList.remove("lazy");
         }
@@ -98,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                console.log('Response data:', data);  // 查看响应数据
                 if (data.code === 200) {
                     renderHotNews(data.data);
                 } else {
@@ -111,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderHotNews(hotNews) {
-        console.log('hotNews:', hotNews);  // 确认 hotNews 数据
         const hotNewsContainer = document.getElementById('hot-news-container');
         if (!hotNewsContainer) {
             console.error('No element with id "hot-news-container" found.');
@@ -122,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
             newsElement.classList.add('mb-6', 'md:mb-2');
             newsElement.innerHTML = `
           <a href="news-detail.html?id=${news.id}">
-                <img style="object-fit: cover" data-aName = 'animate-fadeIn' data-src="${news.cover}" class="w-full h-[300px] md:h-[506px] hide-ele lazy hot-news-img"  alt="">
+                <img style="object-fit: cover" data-aName = 'animate-fadeIn' data-src="${news.cover}" class="w-full  hide-ele lazy hot-news-img"  alt="">
                 <h2 data-aName = 'animate-fadeIn' class="text-xl leading-9 block mt-9 mb-7 hide-ele" style="color: #fafafa">${news.title}</h2>
                 <h2 data-aName = 'animate-fadeIn' class="text-sm hide-ele">${news.summary}</h2>
             </a>
@@ -138,4 +141,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-});

@@ -62,7 +62,6 @@ header {
 
 .carousel-caption {
     position: absolute;
-    bottom: 50%;
     left: 50%;
     display: flex;
     align-items: center;
@@ -72,34 +71,53 @@ header {
     font-family: Microsoft YaHei UI;
     color: #fff;
 }
-
 .carousel-caption h3 {
-    font-size: 70px;
     font-weight: 600;
     padding-bottom: 20px;
 }
 
 .carousel-caption p {
     font-weight: 400;
-    font-size: 36px;
 }
 
+.carousel-caption {
+    bottom: 50%;
+}
 
-@media screen and (max-width: 680px) {
+.carousel-caption h3 {
+    font-size: 70px;
+}
+
+.carousel-caption p {
+    font-size: 36px;
+}
+@media (max-width: 1024px) {
     .carousel-caption {
-
-        position: absolute;
         bottom: 25%;
-        left: 50%;
-        transform: translate(-50%, 50%);
-        font-family: Microsoft YaHei UI;
-        color: #fff;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1500px) {
+    .carousel-caption h3 {
+        font-size: 60px;
     }
 
+    .carousel-caption p {
+        font-size: 28px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .carousel-caption h3 {
+        font-size: 32px;
+    }
+    .carousel-caption p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 767px) {
     .carousel-caption h3 {
         font-size: 25px;
     }
-    
     .carousel-caption p {
         font-size: 14px;
     }
@@ -110,7 +128,6 @@ header {
     position: relative;
 }
 .title-wrap span {
-     /* 描边宽度为1px，描边颜色为黑色 */
      -webkit-text-stroke: 1px rgba(217, 217, 217, 1);
      color: rgba(246, 246, 246, 1);
      position: relative;
@@ -196,6 +213,8 @@ main img {
 
 .team-wrap img {
     transition: transform 0.5s;
+    box-sizing: border-box;
+    z-index: 2;
 }
 
 .team-wrap img:hover {
@@ -264,24 +283,12 @@ main img {
 .culture-wrap {
     position: relative;
     overflow: hidden;
-    background-image: url('../static/enterprise_culture.jpg');
+    /*background-image: url('https://lrk-font-end.oss-cn-hangzhou.aliyuncs.com/Group-27.webp?Expires=1719249119&OSSAccessKeyId=TMP.3KjfTH2EVAqY6AqmEhrN9G9pctCZNXXBmfsriffd5VrfSFY4hVp6xRecZfg13Ms2arzQBF35w7oAkXVRDqd4bHHbLNXmW3&Signature=3uhA2teTwaAJHOQOcAZANfDT6Tw%3D ');*/
     background-size: cover;
-    background-position: center;
-}
-
-
-
-.culture-wrap::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
+    background-position: center center;
+    background-attachment: fixed; /* 固定背景图片 */
+    height: 520px;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* 半透明黑色遮罩 */
-    filter: brightness(70%);
-    /* 调整遮罩层的亮度为 70% */
 }
 
 .culture-content {
