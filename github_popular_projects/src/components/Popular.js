@@ -6,7 +6,7 @@ function popularReducer(state, action) {
             return {
                 ...state,
                 loading: true,
-                error: null
+                error: null // 在开始请求时重置错误状态
             };
         case 'success':
             return {
@@ -18,6 +18,7 @@ function popularReducer(state, action) {
                     ],
                     page: action.page
                 },
+                error: null,
                 loading: false
             };
         case 'error':
@@ -43,7 +44,7 @@ function useFetch(selectedLanguage) {
         {error: null, loading: true}
     );
 
-    const [loadingMore, setLoadingMore] = useState(false); // 新增 loadingMore 状态
+    const [loadingMore, setLoadingMore] = useState(false);
 
     const previousLanguage = useRef(selectedLanguage);
 
@@ -59,7 +60,7 @@ function useFetch(selectedLanguage) {
 
         if (state[selectedLanguage] && state[selectedLanguage].repos && state[selectedLanguage].repos.length > 0) return;
 
-        dispatch({type: 'fetch'});
+        dispatch({type: 'fetch'}); // 清除错误状态
 
         fetchPopularRepos(selectedLanguage, 1)
             .then((data) =>
@@ -73,14 +74,10 @@ function useFetch(selectedLanguage) {
 
     useEffect(() => {
         const handleScroll = debounce(() => {
-            console.log('监控滚动....')
-            if (
-                onBottom()
-                && !loadingMore  // 确保不是正在加载更多的状态
-            ) {
+            if (onBottom() && !loadingMore) {
                 loadMore();
             }
-        })
+        });
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -88,30 +85,29 @@ function useFetch(selectedLanguage) {
     }, [state, selectedLanguage, loadingMore]);
 
     const loadMore = () => {
-        setLoadingMore(true); // 设置正在加载更多的状态
+        setLoadingMore(true);
 
         const nextPage = (state[selectedLanguage] && state[selectedLanguage].page || 1) + 1;
-
         fetchPopularRepos(selectedLanguage, nextPage)
             .then((data) =>
-                dispatch({type: 'success', error: null, selectedLanguage, repos: data, page: nextPage})
+                dispatch({type: 'success',selectedLanguage, repos: data, page: nextPage, error: null, })
             )
             .catch((error) => {
                 console.warn('Error fetching repos:', error);
                 dispatch({type: 'error'});
             })
             .finally(() => {
-                setLoadingMore(false); // 取消加载更多的状态
+                setLoadingMore(false);
             });
     };
 
     return {
         repos: state[selectedLanguage] && state[selectedLanguage].repos || [],
         loading: state.loading,
-        error: state.error, loadingMore
+        error: state.error,
+        loadingMore
     };
 }
-
 
 function Popular() {
 
@@ -120,16 +116,17 @@ function Popular() {
         return params.get('language') || 'All';
     };
 
-    const localLanguage = getLanguageFromUrl()
-    const language = localLanguage || 'All'
+    const localLanguage = getLanguageFromUrl();
+    const language = localLanguage || 'All';
 
     const [selectedLanguage, setSelectedLanguage] = useState(language);
     const {repos, loading, error, loadingMore} = useFetch(selectedLanguage);
 
     const updateLanguage = (lg) => {
-        history.pushState(null, null, '?language=' + lg );
-        setSelectedLanguage(lg)
-    }
+        history.pushState(null, null, '?language=' + lg);
+        setSelectedLanguage(lg);
+    };
+
     return (
         <Fragment>
             <LanguagesNav
@@ -137,43 +134,36 @@ function Popular() {
                 onUpdateLanguage={updateLanguage}
             />
 
-
             {repos.length > 0 && <ReposGrid repos={repos}/>}
 
             {(loadingMore || loading) && <Loading text='努力加载中...'/>}
 
             {error && <p className='center-text error'>{error}</p>}
 
-
         </Fragment>
     );
 }
 
-
 function onBottom() {
-    //窗口高度
     const windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-    //滚动高度
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    //页面高度
     const documentHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    return (windowHeight + scrollTop + 250) >= (+documentHeight)
+    return (windowHeight + scrollTop + 250) >= (+documentHeight);
 }
-
 
 function debounce(fn, delay = 300) {
     if (typeof fn !== 'function') {
-        throw new TypeError('fn不是函数')
+        throw new TypeError('fn不是函数');
     }
-    let timer; // 维护一个 timer
+    let timer;
     return function () {
-        const _this = this; // 取debounce执行作用域的this(原函数挂载到的对象)
+        const _this = this;
         const args = arguments;
         if (timer) {
             clearTimeout(timer);
         }
         timer = setTimeout(function () {
-            fn.apply(_this, args); // 用apply指向调用debounce的对象，相当于_this.fn(args);
+            fn.apply(_this, args);
         }, delay);
     };
 }
