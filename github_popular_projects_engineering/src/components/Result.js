@@ -3,7 +3,6 @@ import { battle } from '@/utils/index.js'
 import Card from './Card'
 import ProfileList from './ProfileList'
 import Loading from './Loading'
-import queryString from 'query-string'
 import {Link, useSearchParams} from 'react-router-dom'
 
 function battleReducer(state, action) {
@@ -53,7 +52,7 @@ function useFetch(playerOne, playerTwo) {
 
 export default function Results({ location }) {
     console.log('location',location)
-    const [searchParams,setSearchParms]=useSearchParams();
+    const [searchParams]=useSearchParams();
     const playerOne = searchParams.get('playerOne');
     const playerTwo = searchParams.get('playerTwo');
     const { winner, loser, error, loading } = useFetch(playerOne, playerTwo)
