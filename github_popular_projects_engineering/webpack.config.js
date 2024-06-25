@@ -7,16 +7,36 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
+    mode:'development',
+    resolve: {
+        extensions: [".js", ".jsx"], // 引入 js jsx文件时，引入路径不需携带文件后缀
+        // 设置别名，@ 直接指向 src 目录
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
+    },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.(js|jsx)$/,
                 use: {
-                    loader: 'babel-loader'
-                }
-            }
-        ]
+                    loader: "babel-loader",                },
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192, // 小于8KB的文件转换为base64格式
+                            name: 'images/[name].[hash:8].[ext]' // 输出文件名格式
+                        }
+                    }
+                ]
+            },
+
+            {test: /\.css$/, use: ["style-loader", "css-loader"]},
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -27,7 +47,6 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'dist')
         },
-        compress: true,
-        port: 9000
+        port: 3456
     }
 };
