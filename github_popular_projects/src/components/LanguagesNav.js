@@ -1,4 +1,3 @@
-const {Fragment} = React;
 const PropTypes = PropTypes;
 
 function LanguagesNav({selected, onUpdateLanguage}) {
